@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 19, 2021 at 10:50 AM
+-- Generation Time: Jan 29, 2021 at 06:59 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.3.21
 
@@ -965,17 +965,11 @@ CREATE TABLE IF NOT EXISTS `sites` (
   `is_active` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `teamleader_id` int NOT NULL,
+  `presold_hours` float NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sites`
---
-
-INSERT INTO `sites` (`id`, `zone_id`, `name`, `city_id`, `state_id`, `country_id`, `latitude`, `longitude`, `is_active`, `created_at`, `updated_at`) VALUES
-(7, 18, 'Sterling Forest', 11, 9, 9, '41.95507', '-74.08378', 1, '2021-01-10 09:52:15', '2021-01-11 11:32:25'),
-(12, 18, 'NY zoo', 9, 8, 9, '41.95507', '-74.08378', 1, '2021-01-11 12:47:03', '2021-01-11 12:47:03'),
-(13, 21, 'testlocation1', 16, 15, 4, '31.60634', '74.21867', 0, '2021-01-12 06:48:33', '2021-01-16 05:45:18');
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1005,6 +999,36 @@ INSERT INTO `states` (`id`, `name`, `country_id`, `is_active`, `updated_at`) VAL
 (8, 'New York', 9, 1, '0000-00-00 00:00:00'),
 (12, 'punjab', 4, 1, '0000-00-00 00:00:00'),
 (15, 'sindh', 4, 1, '2021-01-12 06:07:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `task_category`
+--
+
+DROP TABLE IF EXISTS `task_category`;
+CREATE TABLE IF NOT EXISTS `task_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) NOT NULL,
+  `parent_id` int DEFAULT '0',
+  `description` varchar(191) DEFAULT NULL,
+  `is_active` int DEFAULT '1',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `task_category`
+--
+
+INSERT INTO `task_category` (`id`, `name`, `parent_id`, `description`, `is_active`, `created_at`, `updated_at`) VALUES
+(14, 'MULTI FIBER CABLING', NULL, NULL, 1, '2021-01-22 04:37:36', '2021-01-22 04:37:36'),
+(13, 'FIBER OPTIC PATCHING', NULL, NULL, 1, '2021-01-22 04:37:15', '2021-01-22 04:37:15'),
+(12, 'Removals', NULL, NULL, 1, '2021-01-22 04:36:24', '2021-01-22 04:36:24'),
+(11, 'CABINETS AND RACKS', NULL, NULL, 1, '2021-01-22 04:35:53', '2021-01-22 04:35:53'),
+(10, 'RACK MOUNT ELECTRONICS GENERIC', NULL, NULL, 1, '2021-01-22 04:35:31', '2021-01-22 04:35:31'),
+(15, 'NLYTE', NULL, NULL, 1, '2021-01-22 04:38:10', '2021-01-22 04:38:10');
 
 -- --------------------------------------------------------
 
