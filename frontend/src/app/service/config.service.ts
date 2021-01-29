@@ -41,7 +41,7 @@ export class ConfigService extends AppComponentBase {
   public pageSize: number=25;
 
   public url: string = this.yourSiteUrl + '/api/';
-  public imgUrl: string = this.yourSiteUrl + "/";
+  public imgUrl: string = this.yourSiteUrl + "/api";
   public languageCode: string = sessionStorage.languageCode;
 
   public countriesList: any = [];
