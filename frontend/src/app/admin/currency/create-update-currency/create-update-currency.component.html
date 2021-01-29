@@ -83,7 +83,7 @@
                                 </div> -->
 
 
-                                <div class="form-group col-lg-6">
+                                <!-- <div class="form-group col-lg-6">
                                     <label class="form-control-label" for="is_default">{{'Default' | translate}}</label>
                                     <select class="form-control mb-3" id="is_default" formControlName="is_default"
                                         [ngClass]="{ 'is-invalid': submittedCreateCurrency && cu.is_default.errors }">
@@ -94,7 +94,7 @@
                                         class="invalid-feedback">
                                         <div *ngIf="cu.is_default.errors.required">{{'Default Value is required' | translate}}</div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group col-lg-6">
                                     <label class="form-control-label" for="code">{{'Code' | translate}}</label>
@@ -131,8 +131,9 @@
                                     <label class="form-control-label" for="is_active">{{'Status' | translate}}</label>
                                     <select class="form-control mb-3" id="is_active" formControlName="is_active"
                                         [ngClass]="{ 'is-invalid': submittedCreateCurrency && cu.is_active.errors }">
+                                        <option value="null">{{'Select Status' | translate}}</option>
                                         <option value="1">{{'Active' | translate}}</option>
-                                        <option value="0">{{'DeActive' | translate}}</option>
+                                        <option value="0">{{'InActive' | translate}}</option>
                                     </select>
                                     <div *ngIf="submittedCreateCurrency && cu.is_active.errors" class="invalid-feedback">
                                         <div *ngIf="cu.is_active.errors.required">{{'Value is required' | translate}}</div>

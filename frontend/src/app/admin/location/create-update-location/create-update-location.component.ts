@@ -4,6 +4,7 @@ import { AppComponentBase } from 'src/app/app-component-base';
 import { ConfigService } from 'src/app/service/config.service';
 import { CityService } from 'src/app/service/city.service';
 import { CstateService } from 'src/app/service/cstate.service';
+import { finalize, debounce } from 'rxjs/operators';
 import * as fromCountry from '../../../store/country/country.reducer';
 import * as fromZone from '../../../store/zone/zone.reducer';
 @Component({
@@ -23,18 +24,22 @@ export class CreateUpdateLocationComponent extends AppComponentBase {
   city_id = '';
   cstate_id = '';
   zone_id = '';
+  teamleader_id = '';
+  formattedaddress= '';
+  teamleaderList:any = [];
+  presold_hours = 0;
   constructor(injector: Injector, private configService: ConfigService, private cityservce : CityService, private cstateService : CstateService) {
     super(injector);
   }
 
   ngOnInit() {
-    this.configService.get('fetchCountries').subscribe((data) => {
+    this.configService.get('ActivefetchCountries').subscribe((data) => {
       this.countries = data;
     });
-    this.configService.get('fetchZones').subscribe((data) => {
+    this.configService.get('ActivefetchZones').subscribe((data) => {
       this.zones = data;
     });
-
+    this.getWorkforce();
   
     var params = this.activatedRouter.snapshot.paramMap.get("id");
     if (params) {
@@ -48,6 +53,9 @@ export class CreateUpdateLocationComponent extends AppComponentBase {
             country_id: [data.data.country_id, Validators.required],
             city_id: [data.data.city_id],
             state_id: [data.data.state_id],
+            teamleader_id: [data.data.teamleader_id, Validators.required],
+            presold_hours: [data.data.presold_hours, Validators.required],
+            address: [data.data.address, Validators.required],
             zone_id: [data.data.zone_id, Validators.required],
             is_active: [data.data.is_active, Validators.required],
           });
@@ -65,6 +73,9 @@ export class CreateUpdateLocationComponent extends AppComponentBase {
         name: ['', Validators.required],
         country_id: [''],
         city_id: [''],
+        teamleader_id: ['', Validators.required],
+        presold_hours: [0, Validators.required],
+        address: ['', Validators.required],
         state_id: [''],
         zone_id: ['', Validators.required],
         is_active: ['', Validators.required],
@@ -160,7 +171,7 @@ export class CreateUpdateLocationComponent extends AppComponentBase {
         }
       }
       else {
-        this.toastr.success('Location Added Successfully!');
+        this.toastr.success('Site Added Successfully!');
         this.router.navigate(['/admin/view-location']);
       }
       this.spinnerService.hide();
@@ -181,7 +192,7 @@ export class CreateUpdateLocationComponent extends AppComponentBase {
         }
       }
       else {
-        this.toastr.success('Location Updated Successfully!');
+        this.toastr.success('Site Updated Successfully!');
         this.router.navigate(['/admin/view-location']);
 
       }
@@ -189,4 +200,24 @@ export class CreateUpdateLocationComponent extends AppComponentBase {
     });
 
   }
+
+  getWorkforce(){
+    this.configService.get('Activework-force').pipe(finalize(() => {
+      this.spinnerService.hide()
+    })).subscribe((data) => {
+      data.forEach(x => {
+        x.name = x.employee_name+' ( '+x.WorkforceDeciplineName+ ' >> ' +x.workCategoryName+' )';
+      });
+      this.teamleaderList = data;
+    });
+  }
+  public AddressChange(address: any) { 
+    console.log('change address');
+     this.formattedaddress=address.formatted_address;
+
+     this.createLocation.patchValue({
+      address: this.formattedaddress
+   });
+
+  } 
 }

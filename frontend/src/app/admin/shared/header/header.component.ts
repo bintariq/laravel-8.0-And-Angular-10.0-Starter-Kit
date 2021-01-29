@@ -12,13 +12,12 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent extends AppComponentBase {
   currentUser = JSON.parse(localStorage.getItem('user'));
-  user_id = '';
-  apiUrl = environment.apiUrl;
+ 
   currentLang = sessionStorage.languageCode;
   currentLangImage = '';
   allLangs = [];
   public token: string;
-  constructor(private config: ConfigService, injector: Injector, private authService: AuthenticationService,router:Router) {
+  constructor(public config: ConfigService, injector: Injector, private authService: AuthenticationService,router:Router) {
     super(injector);
    }
 
@@ -33,23 +32,25 @@ export class HeaderComponent extends AppComponentBase {
     });
 
     if(this.currentUser)
-    {
-      this.token =  this.currentUser.token;
-      this.user_id =  this.currentUser.profile.user_id;
-    }
+    {this.token =  this.currentUser.token;}
 
   }
   logout(){
-    this.config.post('logout', {user_id : this.user_id}).subscribe((data) => {
+    // this.authService.logout();
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/accounts/login']);
+    
+    this.config.post('logout', {}).subscribe((data) => {
       localStorage.clear();
       sessionStorage.clear();
       this.router.navigate(['/accounts/login']);
 
     });
   }
-
+  
   updateLanguage(lang){
-    sessionStorage.languageCode = lang;
+    sessionStorage.languageCode = lang; 
     this.currentLang = sessionStorage.languageCode;
     this.localization.use(lang);
     this.allLangs.forEach(element => {

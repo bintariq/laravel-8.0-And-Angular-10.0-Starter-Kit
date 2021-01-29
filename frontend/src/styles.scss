@@ -154,6 +154,13 @@
 //     color: #b4b4b4;
 // }
 /* remove the original arrow */
+.ng-select{
+  font-size: 0.875rem;
+  color: #8898aa;
+  .ng-value-label {
+    color: #8898aa;
+  }
+}
 select.form-control {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -189,7 +196,7 @@ select + .svg-icon {
 
   .sidenav.navbar-vertical.navbar-expand-xs{
       padding-right: 2px;
-      
+      z-index: 9;
   }
   
   .sidenav::-webkit-scrollbar {
@@ -250,4 +257,45 @@ select + .svg-icon {
     th, td{
         vertical-align: middle;
     }
+}
+
+
+.cs-select{
+  margin-right: 15px;
+  width: 150px;
+}
+.nav-tabs{
+  border-bottom: none;
+  margin-bottom: 15px;
+}
+.nav-tabs .nav-link{
+  border-width: 2px;
+  border-style: solid;
+  border-bottom-color: transparent;
+  transition: all 0.5s ease;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.nav-tabs .nav-link:hover{
+  color: blueviolet;
+  border-bottom-color: blueviolet;
+}
+.nav-tabs .nav-link.active{
+  background-color: transparent;
+  color: blueviolet;
+  border-bottom-color: blueviolet;
+}
+
+.avatar.avatar-sm {
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+}
+
+.custom-table td, .custom-table th{
+  white-space: normal;
+}
+.ngx-datatable .datatable-body .datatable-row-wrapper:last-child {
+  margin-bottom: 120px;
 }

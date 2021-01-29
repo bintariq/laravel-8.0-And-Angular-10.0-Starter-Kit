@@ -10,12 +10,19 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PermissionCheckerService } from './service/PermissionCheckerService.service';
 import { AuthGuard } from './service/auth-guard.service';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonBusyDirective } from './Directive/button-busy.directive';
 import { ExcelService } from './service/excel.service';
 import { NgxChartsModule }from '@swimlane/ngx-charts';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationDialogService } from './shared/confirmation-dialog/confirmation-dialog.service';
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
+
 
 @NgModule({
   declarations: [
@@ -27,13 +34,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
+    BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
         timeOut: 10000,
         positionClass: 'toast-bottom-right',
         preventDuplicates: true,
       }),
       NgxDatatableModule,
-      NgxChartsModule
+      NgxChartsModule,
+      NgxMaskModule.forRoot(),
+      TabsModule,
+      NgbModule
   ],
   exports :[
     NgxSpinnerModule,
@@ -44,11 +55,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     NgxDatatableModule,
     ModalModule,
+    TabsModule,
+    BsDropdownModule,
     ButtonBusyDirective,
     NgxChartsModule,
+    NgxMaskModule,
+    NgbModule
   ],
   providers:[PermissionCheckerService,
-    AuthGuard,ExcelService],
+    AuthGuard,ExcelService,ConfirmationDialogService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule { }

@@ -1,0 +1,100 @@
+<div bsModal #createOrEditModal="bs-modal"   data-keyboard="false"   class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal"
+     aria-hidden="true">
+    <div class="modal-dialog rounded-0 overflow-hidden modal-lg">
+        <div class="modal-content" >
+        <div class="modal-header align-items-center p-4">
+                    <h4 class="modal-title">
+                       Time Detail
+                    </h4>
+                    <button type="button" class="close" (click)="close()" [attr.aria-label]="('Close')" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+        <div class="modal-body py-0 px-4" id="contentToConvert">
+            
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Employee Name:</span>
+                        <span class="mt-2">
+                        <i class="fas fa-user-shield text-primary"></i>
+                        
+                        <span class="text-body-secondary ml-2">{{workforceDate?.workforce_name}}</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Email:</span>
+                        <span class="mt-2">
+                            <i class="fas fa-envelope text-dark"></i>
+                       
+                        
+                        <span class="text-body-secondary ml-2">{{workforceDate?.workforce_email}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Time Type:</span>
+                        <span class="mt-2">
+                            <i class="fas fa-clock" style="color: burlywood;"></i>
+                        
+                        <span class="text-body-secondary ml-2">{{workforceDate?.time_type}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Description:</span>
+                        <span class="mt-2">
+                            <i class="fas fa-align-center" style="color: cornflowerblue;"></i>
+                        
+                        
+                        <span class="text-body-secondary ml-2">{{workforceDate?.description}}</span>
+                        </span>
+                    </div>
+                </div>
+
+                
+
+                <div class="col-md-4 mb-3" *ngIf="workforceDate?.approved!=0">
+                    <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Approved Notes:</span>
+                        <span class="mt-2">
+                            <i class="fas fa-check-circle text-warning"></i>
+                        
+                        <span class="text-body-secondary ml-2">{{workforceDate?.approved_notes}}</span>
+                        </span>
+                    </div>
+                </div>
+
+
+                
+            </div>
+           
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"  novalidate *ngIf="workforceDate?.approved==0">
+                <div class="row">
+                <div class="form-group col-12">
+                    <label>Work Remarks</label>
+                    <textarea type="text" name="Description" class="form-control" [(ngModel)]="model.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" ></textarea>
+                    <div *ngIf="f.submitted && description.invalid" class="invalid-feedback">
+                        <div *ngIf="description.errors.required">Work Remarks is required</div>
+                    </div>
+                </div>
+            <div class="col-12 text-right">
+                <button class="btn btn-secondary" type="reset" (click)="close()">Cancel</button>
+                <button class="btn btn-primary mr-1">Approved</button>
+            </div>
+        </div>
+        </form>
+        </div>
+         <div class="modal-footer">
+            <!-- <button class="btn btn-primary mr-1" (click)="generatePDF('download')" >Save</button>
+            <button class="btn btn-danger mr-1" (click)="close()" >Close</button> -->
+        </div> 
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,99 @@
+
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+            
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block" >
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">{{'Project'}}</li>
+                </ol>
+            </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a  href="javascript:void(0)" class="btn btn-info" (click)="exportExcel()" >{{'Export CSV'}}</a>
+                <!-- <a *ngIf="isGranted('Create Qoutation')"  href="javascript:void(0)" (click)="createNew()" class="btn btn-neutral">{{'Add New'}}</a> -->
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-md-6">
+                            <h2 class="mb-0">{{'Project'}}</h2>
+                        </div>
+                        <div class="col-md-4 d-flex justify-content-between">
+                            <select class="form-control mr-2">
+                                <option>Id</option>
+                            </select>
+                            <input
+                            type="text"
+                            class="form-control rounded-lg"
+                            placeholder="Type to filter the name column..."
+                            (keyup)="updateFilter($event)"
+                          />
+                        </div>
+                    </div>
+                </div>
+                <!-- Light table -->
+                <!-- Light table -->
+              
+              <div class="card-body">
+                <div class="col-12 px-0 mb-3">
+                  <ng-select [items]="allColumns" [multiple]="true" bindLabel="name"  [selectableGroup]="true"
+                  [closeOnSelect]="false" [(ngModel)]="columns">
+                  <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name | uppercase}}
+                  </ng-template>
+                  <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name}}
+                  </ng-template>
+              </ng-select>
+                 </div>
+                <ngx-datatable
+                  class="bootstrap"
+                  [rows]="rows"
+                  [columnMode]="ColumnMode.force"
+                  [headerHeight]="50"
+                  [footerHeight]="50"
+                  [scrollbarH]="true"
+                  rowHeight="auto"
+                >
+                <ngx-datatable-column name="ID" prop="id" [width]="100" [resizeable]="false"
+                [sortable]="false"
+                [draggable]="false"
+                [canAutoResize]="false">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value }}
+                  </ng-template>
+                </ngx-datatable-column>
+                  <ngx-datatable-column *ngFor="let col of columns" [width]="250" [name]="col.name" [prop]="col.prop"> </ngx-datatable-column>
+                  <ngx-datatable-column name="Actions" [width]="250">
+                      <ng-template let-value="value"  let-row="row" ngx-datatable-cell-template>
+                        <!-- <button  class="btn text-white btn-icon-only bg-danger" (click)="delete(row.id)"><i class="far fa-trash-alt"></i></button> -->
+                        <button  class="btn text-white btn-icon-only bg-primary" [routerLink]="['/admin/project/view-project']"
+                        [queryParams]="{id: row.id}" 
+                        ><i class="fa fa-eye" aria-hidden="true"></i> </button>
+                        <!-- <button class="btn text-white btn-icon-only bg-danger" ><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                      </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -11,10 +11,23 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    if (localStorage.getItem('user') != null && state.url == '/accounts/login') {
-      this._router.navigate(['/admin/dashboard']);
-      return true;
+
+    var role = JSON.parse(localStorage.getItem('user'));
+
+    if (localStorage.getItem('user') != null && role.profile.role_name == "SUPER ADMIN") {
+      if (state.url == '/accounts/login' || state.url == '/workforce/dashboard') {
+        this._router.navigate(['/admin/dashboard']);
+        return true;
+      }
     }
+    if (localStorage.getItem('user') != null  && role.profile.role_name == "workforce") {
+      if (state.url == '/accounts/login' || state.url == '/admin/dashboard') {
+        this._router.navigate(['/workforce/dashboard']);
+      return true;
+      }
+
+    }
+
     var userId;
      this.route.queryParams.subscribe(params => {
       var userId = params['id'];

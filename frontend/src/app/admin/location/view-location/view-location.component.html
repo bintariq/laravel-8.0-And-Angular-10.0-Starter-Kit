@@ -8,13 +8,13 @@
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
                             <li class="breadcrumb-item"><a routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
                             <li class="breadcrumb-item"><a routerLink="/admin/dashboard">{{'Dashboard' | translate}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{'Locations' | translate}}</li>
+                            <li class="breadcrumb-item active" aria-current="page">{{'Sites' | translate}}</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-lg-6 col-5 text-right">
                     <a *ngIf="isGranted('Create Locations')" href="javascript:void(0)" routerLink="/admin/create-update-location"
-                        class="btn btn-neutral">{{'Add New Location' | translate}}
+                        class="btn btn-neutral">{{'Add New Site' | translate}}
                     </a>
                     <a *ngIf="isGranted('View Location Map')" href="javascript:void(0)" routerLink="/admin/view-location-map"
                     class="btn btn-neutral">{{'Map View' | translate}}
@@ -36,7 +36,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-md-6">
-                            <h2 class="mb-0">{{'Locations' | translate}}</h2>
+                            <h2 class="mb-0">{{'Sites' | translate}}</h2>
                         </div>
                         <div class="col-md-4 d-flex justify-content-between">
                             <select class="form-control mr-2" (change)="setSearchColumn($event)">
@@ -80,7 +80,7 @@
                                     </span>
                                     <span *ngIf="row.is_active == 0" class="badge badge-dot mr-4">
                                         <i class="bg-danger"></i>
-                                        <span class="status">{{'DeActive' | translate}}</span>
+                                        <span class="status">{{'Inactive' | translate}}</span>
                                     </span>
                                 </ng-template>
                             </ngx-datatable-column>

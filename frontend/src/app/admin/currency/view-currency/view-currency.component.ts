@@ -30,7 +30,6 @@ export class ViewCurrencyComponent extends AppComponentBase {
     { prop: 'symbol', name: 'Symbol'},
     { prop: 'decimal_point', name: '(DP)' },
     { prop: 'value', name: 'Value' },
-    { prop: 'is_default', name: 'Default' },
     { prop: 'is_active', name: 'Status' },
     { name: 'Actions' },
 

@@ -5,366 +5,80 @@
         <div class="header-body">
             <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">{{'Cities' | translate}}</h6>
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
                             <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="#">{{'Settings' | translate}}</a></li>
+                            <li class="breadcrumb-item"><a routerLink="/admin/dashboard">{{'DashBoard' | translate}}</a></li>
+                            <li class="breadcrumb-item"><a aria-current="page">{{'Settings' | translate}}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{'Cities' | translate}}</li>
                         </ol>
                     </nav>
                 </div>
-                <div class="col-lg-6 col-5 text-right">
-                    <button data-toggle="modal" data-target="#addCityModal" class="btn btn-sm btn-neutral">{{'Add New City' | translate}}</button>
+                <div *ngIf="isGranted('Create Cities')" class="col-lg-6 col-5 text-right">
+                    <a href="javascript:void(0)" routerLink="/admin/create-update-city"
+                        class="btn btn-neutral">{{'Add New City' | translate}}</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Page content -->
-<div class="container-fluid mt--6" *ngIf="cities">
+<!-- Page content -->
+<div class="container-fluid mt--6">
     <div class="row">
         <div class="col">
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header border-0">
-                    <div class="row">
+                    <div class="row align-items-center justify-content-between">
                         <div class="col-md-6">
-                            <h3 class="mb-0">{{'Cities Listing' | translate}}</h3>
+                            <h2 class="mb-0">{{'Cities' | translate}}</h2>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-0" style="float: inherit;">
-                                <div class="row">
-                                    <div class="col-md-3 offset-4">
-                                        <div class="form-group">
-                                            <select [ngModel]="search_column"
-                                                (ngModelChange)="updateSearchColumnValue($event)" name="search_column"
-                                                required="required" class="form-control" id="input-status"
-                                                [ngClass]="{'invalid': this.search_column == ''}">
-                                                <option value="id" selected="selected">{{'Id' | translate}}</option>
-                                                <option value="name">{{'Name' | translate}}</option>
-                                                <option value="status">{{'Status' | translate}}</option>
-                                                <option value="created_at">{{'Created At' | translate}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input [ngModel]="search_text" (ngModelChange)="searchData($event)"
-                                                name="search_text" required="required" pattern=".{6,30}" type="text"
-                                                placeholder="Search Here" class="form-control mb-3" id="input-name" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-4 d-flex justify-content-between">
+                            <select class="form-control mr-2" (change)="setSearchColumn($event)">
+                                <option value="id">Id</option>
+                                <option value="name">Name</option>
+                            </select>
+                            <input type="text" class="form-control rounded-lg"
+                                placeholder="Search" (keyup)="searchRecord($event)" />
                         </div>
                     </div>
                 </div>
                 <!-- Light table -->
-                <div class="table-responsive">
-                    <ngx-spinner></ngx-spinner>
 
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col" data-sort="id" (click)="sortData('id')">
-                                    <i *ngIf="data_sort_order == 'ASC'" class="fas fa-sort-amount-up-alt"></i>
-                                    <i *ngIf="data_sort_order == 'DESC'" class="fas fa-sort-amount-down-alt"></i>
-                                    {{'Id' | translate}}
-                                </th>
-                                <th scope="col" class="sort" data-sort="name" (click)="sortData('name')">
-                                    <i *ngIf="data_sort_order == 'ASC'" class="fas fa-sort-amount-up-alt"></i>
-                                    <i *ngIf="data_sort_order == 'DESC'" class="fas fa-sort-amount-down-alt"></i>
-                                    {{'Name' | translate}}
-                                </th>
-                                <th scope="col" class="sort" data-sort="status">
-                                    {{'Country' | translate}}
-                                </th>
-                                <th scope="col" class="sort" data-sort="status">
-                                    {{'State' | translate}}
-                                </th>
-                                <th scope="col" class="sort" data-sort="status">
-                                    {{'State' | translate}}
-                                </th>
-                                <th scope="col" class="sort" data-sort="status" (click)="sortData('status')">
-                                    <i *ngIf="data_sort_order == 'ASC'" class="fas fa-sort-amount-up-alt"></i>
-                                    <i *ngIf="data_sort_order == 'DESC'" class="fas fa-sort-amount-down-alt"></i>
-                                    {{'Status' | translate}}
-                                </th>
-                                <th scope="col" class="sort" data-sort="completion" (click)="sortData('created_at')">
-                                    <i *ngIf="data_sort_order == 'ASC'" class="fas fa-sort-amount-up-alt"></i>
-                                    <i *ngIf="data_sort_order == 'DESC'" class="fas fa-sort-amount-down-alt"></i>
-                                    {{'Created At' | translate}}
-                                </th>
-                                <th scope="col">
-                                    {{'Action' | translate}}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="list">
-                            <!-- <tr *ngFor="let city of cities$ | async"> -->
-                            <tr *ngFor="let city of cities">
-                                <td>{{city.id}}</td>
-                                <th scope="row">
-                                    <div class="media align-items-center">
-                                  
-                                        <div class="media-body">
-                                            <span class="name mb-0 text-sm">{{city.name}}</span>
-                                        </div>
-                                    </div>
-                                </th>
-                                <td class="budget">
-                                    {{city.country_name}}
-                                </td>
-                                <td class="budget">
-                                    {{city.state_name}}
-                                </td>
-                                <td>
-                                    <span *ngIf="city.is_active == 1" class="badge badge-dot mr-4">
+                <div class="card-body">
+                    <ngx-datatable #table class="bootstrap" [columnMode]="ColumnMode.force" [rows]="rows"
+                        [columns]="columns" [headerHeight]="50" [footerHeight]="50" rowHeight="auto"
+                        [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber"
+                        [limit]="page.size" (page)="setPage($event)">
+                        <ng-container *ngFor='let column of columns'>
+                            <ngx-datatable-column *ngIf='column.name === "Status"' name="Status" prop="is_active">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <span *ngIf="row.is_active == 1" class="badge badge-dot mr-4">
                                         <i class="bg-success"></i>
                                         <span class="status">{{'Active' | translate}}</span>
                                     </span>
-                                    <span *ngIf="city.is_active == 2" class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span class="status">{{'Pending' | translate}}</span>
-                                    </span>
-                                    <span *ngIf="city.is_active == 0" class="badge badge-dot mr-4">
+                                    <span *ngIf="row.is_active == 0" class="badge badge-dot mr-4">
                                         <i class="bg-danger"></i>
-                                        <span class="status">{{'DeActive' | translate}}</span>
+                                        <span class="status">{{'Inactive' | translate}}</span>
                                     </span>
-                                </td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        {{city.created_at}}
-                                    </div>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a class="dropdown-item" (click)="fetchDataToEdit(city.id)" data-toggle="modal" data-target="#editCityModal">{{'Edit Record' | translate}}</a>
-                                            <a class="dropdown-item" (click)="handleCityDeletion(city.id)">{{'Delete Record' | translate}}</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- Card footer -->
-                <div class="card-footer py-4">
-                    <nav aria-label="...">
-                        <ul class="pagination justify-content-end mb-0">
-                            <li *ngFor="let link of paginate_links" [ngClass]="{'disabled': isNumber(link.label)}"
-                                [ngClass]="{'active': link.active}" class="page-item ">
-                                <a class="page-link" tabindex="-1" (click)="previousPage(this.prev_page_url)"
-                                    *ngIf='isPrevious(link.label)'>
-                                    <i class="fas fa-angle-left"></i>
-                                    <span class="sr-only">{{'Previous' | translate}}</span>
-                                </a>
-                                <a class="page-link" (click)="pageNumber(link.label)"
-                                    *ngIf='!isPrevious(link.label) && !isNext(link.label)'>{{link.label}}</a>
-                                <a class="page-link" (click)="nextPage(this.next_page_url)" *ngIf='isNext(link.label)'>
-                                    <i class="fas fa-angle-right"></i>
-                                    <span class="sr-only">{{'Next' | translate}}</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
+                                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                                    <td>
+                                        <button *ngIf="isGranted('Update Cities')" class="btn text-white btn-icon-only bg-primary" routerLink="/admin/create-update-city/{{row.id}}"><i class="fas fa-pencil-alt"></i> </button>
+                                        <button *ngIf="isGranted('Delete Cities')" class="btn text-white btn-icon-only bg-danger" (click)="delete(row.id)"><i class="far fa-trash-alt"></i></button>
+                                    </td>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column *ngIf='column.name !== "Actions" && column.name !== "Status" && column.name !== "Default" && column.name !== "Symbol"' name="{{column.name}}"
+                                prop="{{column.prop}}">
+                            </ngx-datatable-column>
+                        </ng-container>
+                    </ngx-datatable>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="addCityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{'Add City Here' | translate}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <form [formGroup]="uploadForm" (ngSubmit)="submitForm()">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <div class="">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-name">{{'City Name' | translate}}</label>
-                                            <input formControlName="name" name="name" required="required"
-                                                pattern=".{6,30}" type="text" placeholder="City Name"
-                                                class="form-control mb-3" id="input-name"
-                                                [ngClass]="{'invalid': (error$ | async)?.name}" />
-                                            <span *ngIf="(error$ | async)?.name" class="validation-span">{{ (error$ |
-                                                async)?.name }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-country">{{'Country' | translate}}</label>
-                                            <ng-select
-                                            (change) = "updateCountryNgModel($event)"                                         
-                                            [items]="countries" 
-                                            bindLabel="name"
-                                            autofocus
-                                            bindValue="id"
-                                            [ngModel]="country_id" 
-                                            [ngModelOptions]="{standalone: true}">
-                                             </ng-select>
-                                             <span *ngIf="(error$ | async)?.country_id" class="validation-span">{{ (error$ |
-                                                async)?.country_id }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-country">{{'State' | translate}}</label>
-                                            <ng-select
-                                            (change) = "updateStateNgModel($event)"                                         
-                                            [items]="cstates" 
-                                            bindLabel="name"
-                                            autofocus
-                                            bindValue="id"
-                                            [ngModel]="cstate_id" 
-                                            [ngModelOptions]="{standalone: true}">
-                                             </ng-select>
-                                             <span *ngIf="(error$ | async)?.state_id" class="validation-span">{{ (error$ |
-                                                async)?.state_id }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-status">{{'Status' | translate}}</label>
-                                            <select formControlName="status" name="status" required="required"
-                                                class="form-control" id="input-status"
-                                                [ngClass]="{'invalid': (error$ | async)?.status}">
-                                                <option value="" selected="selected"></option>
-                                                <option value="1">{{'Pending' | translate}}</option>
-                                                <option value="2">{{'ON' | translate}}</option>
-                                                <option value="0">{{'OFF' | translate}}</option>
-                                            </select>
-                                            <span *ngIf="(error$ | async)?.code" class="validation-span">{{ (error$ |
-                                                async)?.status }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
-                    <button type="submit" class="btn btn-primary">{{'Save Changes' | translate}}</button>
-                </div>
-            </form>
-        </div>
-    </div>
-  </div>
-
-<div class="modal fade" id="editCityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{'Close' | translate}} </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <form [formGroup]="editForm" (ngSubmit)="submitEditForm()">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-
-                            <div class="">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-name">{{'City Name' | translate}}</label>
-                                            <input formControlName="name" name="name" required="required"
-                                                pattern=".{6,30}" type="text" placeholder="City Name"
-                                                class="form-control mb-3" id="input-name"
-                                                [ngClass]="{'invalid': (error$ | async)?.name}" />
-                                            <span *ngIf="(error$ | async)?.name" class="validation-span">{{ (error$ |
-                                                async)?.name }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-country">{{'Country' | translate}}</label>
-                                            <ng-select     
-                                            (change) = "updateCountryNgModel($event)"                                    
-                                            [items]="countries" 
-                                            bindLabel="name"
-                                            autofocus
-                                            bindValue="id"
-                                            [ngModel]="country_id" 
-                                            [ngModelOptions]="{standalone: true}">
-                                             </ng-select>
-                                             <span *ngIf="(error$ | async)?.country_id" class="validation-span">{{ (error$ |
-                                                async)?.country_id }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-country">{{'State' | translate}}</label>
-                                            <ng-select
-                                            (change) = "updateStateNgModel($event)"                                         
-                                            [items]="cstates" 
-                                            bindLabel="name"
-                                            autofocus
-                                            bindValue="id"
-                                            [ngModel]="cstate_id" 
-                                            [ngModelOptions]="{standalone: true}">
-                                             </ng-select>
-                                             <span *ngIf="(error$ | async)?.state_id" class="validation-span">{{ (error$ |
-                                                async)?.state_id }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="input-status">{{'Status' | translate}}</label>
-                                            <select formControlName="status" name="status" required="required"
-                                                class="form-control" id="input-status"
-                                                [ngClass]="{'invalid': (error$ | async)?.status}">
-                                                <option value="" ></option>
-                                                <option value="2">{{'Pending' | translate}}</option>
-                                                <option value="1">{{'ON' | translate}}</option>
-                                                <option value="0">{{'OFF' | translate}}</option>
-                                            </select>
-                                            <span *ngIf="(error$ | async)?.code" class="validation-span">{{ (error$ |
-                                                async)?.status }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
-                    <button type="submit" class="btn btn-primary">{{'Save Changes' | translate}}</button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

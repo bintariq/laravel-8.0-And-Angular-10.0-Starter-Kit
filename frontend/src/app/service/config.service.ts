@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppComponentBase } from '../app-component-base';
 
 var currentUser = JSON.parse(localStorage.getItem('user'));
-console.log(currentUser);
   if(currentUser!=null && currentUser.info){
 
     if(currentUser.info.language_code){
@@ -29,7 +28,7 @@ console.log(currentUser);
     sessionStorage.currencyCode = 'USD';
 
   }
-  
+
 
 
 @Injectable({
@@ -37,7 +36,7 @@ console.log(currentUser);
 })
 export class ConfigService extends AppComponentBase {
 
-  public yourSiteUrl: string = 'http://127.0.0.1:8000';
+  public yourSiteUrl: string = 'https://api.gemini.technology';
   public token: string;
   public pageSize: number=25;
 
@@ -45,8 +44,16 @@ export class ConfigService extends AppComponentBase {
   public imgUrl: string = this.yourSiteUrl + "/";
   public languageCode: string = sessionStorage.languageCode;
 
-  constructor(injector: Injector,
-    public http: HttpClient,) {
+  public countriesList: any = [];
+  public countryId: any;
+  public countryCode: any;
+  public countryFlag: any;
+  public countryName: any;
+
+  constructor(
+    injector: Injector,
+    public http: HttpClient,
+    ) {
     super(injector);
     this.localization.use(this.languageCode);
     var currentUser = JSON.parse(localStorage.getItem('user'));
@@ -55,17 +62,37 @@ export class ConfigService extends AppComponentBase {
     else{
       this.router.navigate(["/accounts/login"])
     }
-   }
+
+
+    this.getCountries().subscribe(res => {
+      this.countriesList = res;
+      this.countriesList.forEach(element => {
+
+        this.countryCode = element.callingCodes[0];
+        this.countryFlag = element.flag;
+
+      });
+    });
+
+  }
+
+
+  changeCountry(event, country) {
+    sessionStorage.countryFlag = country.flag;
+    sessionStorage.countryCode = country.callingCodes[0];
+    this.countryFlag = sessionStorage.countryFlag;
+    this.countryCode = sessionStorage.countryCode;
+  }
 
   public upload(req, formData) {
-    return this.http.post<any>(this.url + req,  formData, {  
-      reportProgress: true,  
-      observe: 'events'  
+    return this.http.post<any>(this.url + req,  formData, {
+      reportProgress: true,
+      observe: 'events'
     }).pipe(
       catchError((err) => {
         return throwError(err);
       })
-    );  
+    );
   }
 
   // get Method
@@ -82,7 +109,7 @@ export class ConfigService extends AppComponentBase {
     return this.http.get<any>(this.url + req, httpOptions)
     .pipe(
       catchError((err) => {
-        
+
         if (err.status === 401 || err.status === 403) {
             this.router.navigateByUrl('/login');
         }
@@ -102,7 +129,7 @@ export class ConfigService extends AppComponentBase {
       })
     };
 
-  
+
     return this.http.post<any>(this.url + req, data, httpOptions)
     .pipe(
       catchError((err) => {
@@ -127,9 +154,16 @@ export class ConfigService extends AppComponentBase {
     return this.http.delete<any>(this.url + req, httpOptions)
     .pipe(
       catchError((err) => {
-        
+
         return throwError(err);
       })
     );
+  }
+
+
+  getCountries(): any  {
+    let _url: string = 'https://restcountries.eu/rest/v2';
+
+    return this.http.get( _url );
   }
 }

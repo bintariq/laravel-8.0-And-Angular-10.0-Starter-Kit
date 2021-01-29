@@ -11,7 +11,7 @@ function initializeOnLocation(zones, sites) {
 	var myLatLng = new google.maps.LatLng(51.4949, -0.12441);
 	/** General Options **/ 
 	var mapOptions = {
-		zoom: 6,
+		zoom: 2,
 		center: myLatLng,
 		mapTypeId: google.maps.MapTypeId.RoadMap
 	};

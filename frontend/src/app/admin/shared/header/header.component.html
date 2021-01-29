@@ -182,8 +182,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img  height="36px" alt="Image placeholder" [src]="this.apiUrl + this.currentLangImage">
+              <span class="avatar avatar-sm">
+                <img  height="28" alt="Image placeholder" [src]="config.imgUrl + currentLangImage">
               </span>
             </div>
           </a>
@@ -195,7 +195,7 @@
             (click)="updateLanguage(lang.short_code)" 
             class="dropdown-item"
             [ngClass]="{'active': currentLang  == lang.short_code}">
-            <img  height="15px" width="25px;" alt="Image placeholder" [src]="this.apiUrl + lang.image">
+            <img  height="15px" width="25px;" alt="Image placeholder" [src]="config.imgUrl + lang.image">
 
               <span style="margin-left: 10px;">{{lang.name}}</span>
             </a>
@@ -206,8 +206,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <img alt="Image placeholder" [src]="this.apiUrl + currentUser.profile.profile_pic">
+              <span class="avatar avatar-sm ">
+                <img alt="Image placeholder" [src]="config.imgUrl + currentUser.profile.profile_pic">
               </span>
               <div class="media-body  ml-2  d-none d-lg-block">
                 <span class="mb-0 text-sm  font-weight-bold">{{currentUser.profile.first_name}} {{currentUser.profile.last_name}}</span>

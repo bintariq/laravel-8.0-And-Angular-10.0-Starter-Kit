@@ -1,0 +1,160 @@
+<!-- Header -->
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a routerLink="/admin/dashboard">{{'DashBoard' | translate}}</a></li>
+                            <li class="breadcrumb-item"><a aria-current="page">{{'Settings' | translate}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page" routerLink="/admin/view-countries">{{'Countries' | translate}}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="col-md-12">
+
+                        <form [formGroup]="uploadForm" (ngSubmit)="onSubmitCountry()">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-name">{{'Add Country Here' | translate}}</label>
+                                                        <input formControlName="name" name="name" required="required"
+                                                             type="text" placeholder="Country Name"
+                                                            class="form-control mb-3" id="input-name" [ngClass]="{ 'is-invalid': submittedCreateCountry && cu.name.errors }"/>
+                                                            <div *ngIf="submittedCreateCountry && cu.name.errors"
+                                                             class="invalid-feedback">
+                                                             <div *ngIf="cu.name.errors.required">{{'Name is required' | translate}}</div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-wrench_time">{{'Add Wrench Time Here' | translate}}</label>
+                                                        <input formControlName="wrench_time" name="wrench_time" required="required"
+                                                            type="number" placeholder="Wrench Time"
+                                                            class="form-control mb-3" id="input-wrench_time"
+                                                            [ngClass]="{ 'is-invalid': submittedCreateCountry && cu.wrench_time.errors }"/>
+                                                            <div *ngIf="submittedCreateCountry && cu.wrench_time.errors"
+                                                             class="invalid-feedback">
+                                                             <div *ngIf="cu.wrench_time.errors.required">{{'Wrench Time is required' | translate}}</div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group  col-lg-6">
+                                                    <label class="form-control-label" for="input-country">{{'Code ( Just Select Code From Suggestions If Any )' | translate}}</label>
+                                                    <ng-select
+                                                    (change) = "updateCurrencyNgModel($event)"                                         
+                                                    [items]="currency_details" 
+                                                    bindLabel="new_name_for_country_code"
+                                                    autofocus
+                                                    bindValue="code"
+                                                    [ngModel]="code" 
+                                                    [ngModelOptions]="{standalone: true}">
+                                                     </ng-select>
+                                                     <div *ngIf="submittedCreateCountry && cu.code.errors" class="invalid-feedback">
+                                                        <div *ngIf="cu.code.errors.required">{{'Code is required' | translate}}</div>
+                                                       </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-code">{{'Add Code Here' | translate}}</label>
+                                                        <input formControlName="code" name="code" required="required"
+                                                             type="text" placeholder="Code"
+                                                            class="form-control mb-3" id="input-code"
+                                                            [ngClass]="{ 'is-invalid': submittedCreateCountry && cu.code.errors }"/>
+                                                            <div *ngIf="submittedCreateCountry && cu.code.errors"
+                                                             class="invalid-feedback">
+                                                             <div *ngIf="cu.code.errors.required">{{'Code is required' | translate}}</div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-currency">{{'Currency' | translate}}</label>
+                                                        <select formControlName="currency_id" name="currency" required="required"
+                                                            class="form-control" id="input-currency"
+                                                            [ngClass]="{ 'is-invalid': submittedCreateCountry && cu.currency_id.errors }">
+                                                            <option *ngFor="let currency of currencies" value="{{currency.id}}">{{currency.title}}</option>
+                                                        </select>
+                                                        <div *ngIf="submittedCreateCountry && cu.currency_id.errors"
+                                                         class="invalid-feedback">
+                                                         <div *ngIf="cu.currency_id.errors.required">{{'Currency is required' | translate}}</div>
+                                                       </div> 
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-language">{{'Language' | translate}}</label>
+                                                        <select formControlName="language_id" name="language_id" required="required"
+                                                            class="form-control" id="input-language"
+                                                            [ngClass]="{ 'is-invalid': submittedCreateCountry && cu.language_id.errors }">
+                                                            <option *ngFor="let language of languages" value="{{language.id}}">{{language.name}}</option>
+                                                        </select>
+                                                        <div *ngIf="submittedCreateCountry && cu.language_id.errors"
+                                                         class="invalid-feedback">
+                                                         <div *ngIf="cu.language_id.errors.required">{{'Language is required' | translate}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                 <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-is_active">{{'Country Flag' | translate}}</label>
+                                                        <input
+                                                            (change)="upload($event)"
+                                                            name="profile_pic"
+                                                            type="file"
+                                                            accept="image/*"
+                                                            class="form-control mb-3"
+                                                        />
+                                                    </div>
+                                                    <img *ngIf="image" [src] = "this.apiUrl + image" class="img-pic"/>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-is_active">{{'Status' | translate}}</label>
+                                                        <select formControlName="is_active" name="is_active" required="required"
+                                                            class="form-control" 
+                                                            [ngClass]="{ 'is-invalid': submittedCreateCountry && cu.is_active.errors }"
+                                                             id="input-is_active">
+                                                            <option value="1" selected="selected">{{'Active' | translate}}</option>
+                                                            <option value="0">{{'Inactive' | translate}}</option>
+                                                        </select>
+                                                        <div *ngIf="submittedCreateCountry && cu.is_active.errors"
+                                                         class="invalid-feedback">
+                                                         <div *ngIf="cu.is_active.errors.required">{{'Status is required' | translate}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" routerLink="/admin/view-countries" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
+                                <button type="submit" class="btn btn-primary">{{'Save Changes' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

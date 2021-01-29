@@ -6,6 +6,6 @@
 export const environment = {
   production: false,
   baseUrl: window.location.origin, // Base URL here
-  apiUrl: 'http://127.0.0.1:8000/api' //your local API URL here
+  apiUrl: 'https://api.gemini.technology/api' //your local API URL here
   //... more of your variables
 };

@@ -1,0 +1,352 @@
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block" >
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">{{'View Project'}}</li>
+                </ol>
+            </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+
+        <div class="col">
+            <div class="card p-4">
+                <div class="card-header border-0">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-md-10">
+                            <h2 class="mb-0">{{'View Project'}}</h2>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <button class="btn btn-warning mr-1" (click)="AddTimeToproject()" *ngIf="isassigned!=0">Add Time</button>
+                        </div>
+                    </div>
+                </div>
+              <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                     <div class="d-flex flex-column">
+                      <span class="text-body font-weight-bold">Created By</span>
+                      <span class="mt-2">
+                        <i class="fas fa-user-shield text-warning"></i>
+
+                        <span class="text-body-secondary ml-2">{{projectDate2?.UserName}} </span>
+                      </span>
+                     </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Project Reference#</span>
+                        <span class="mt-2">
+                          <i class="fas fa-project-diagram"  style="color: purple;"></i>
+
+                          <span class="text-body-secondary ml-2">{{projectDate?.project_reference_no}}</span>
+                        </span>
+                       </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span  class="text-body font-weight-bold">Zone Name</span>
+                        <span (click)="openModal(template)" class="mt-2">
+                          <i class="fas fa-map-marker-alt text-success"></i>
+
+                          <span class="text-body-secondary ml-2">{{projectDate2?.zoneName}}</span>
+                        </span>
+                       </div>
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Site Name</span>
+                        <span class="mt-2">
+                          <i class="fas fa-map-marked" style="color:deepskyblue;"></i>
+
+                          <span class="text-body-secondary ml-2">{{projectDate2?.SitesName}}</span>
+                        </span>
+                       </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Client Name</span>
+                        <span class="mt-2">
+
+                          <i class="fas fa-user" style="color: cyan;"></i>
+                          <span class="text-body-secondary ml-2">{{projectDate2?.ClientName}}</span>
+                        </span>
+                       </div>
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Currency Title</span>
+                        <span class="mt-2">
+                          <i class="fas fa-dollar-sign"></i>
+
+                          <span class="text-body-secondary ml-2">{{projectDate2?.CurrencyTitle}}</span>
+                        </span>
+                       </div>
+
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Created Date</span>
+                        <span class="mt-2">
+                          <i class="fas fa-calendar-alt" style="color:goldenrod"></i>
+
+                          <span class="text-body-secondary ml-2">{{projectDate?.project_created_date}}</span>
+                        </span>
+                       </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Project Manager</span>
+                        <span class="mt-2">
+
+                          <i class="fas fa-user" style="color: cyan;"></i>
+                          <span class="text-body-secondary ml-2">{{projectDate?.project_manager_detail?.name}}</span>
+                        </span>
+                       </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Team Leader</span>
+                        <span class="mt-2">
+
+                          <i class="fas fa-user" style="color: cyan;"></i>
+                          <span class="text-body-secondary ml-2">{{projectDate?.teamleaderDetail?.employee_name}}</span>
+                        </span>
+                       </div>
+
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                      <div class="d-flex flex-column">
+                        <span class="text-body font-weight-bold">Project Notes</span>
+
+                        <textarea class="text-body-secondary form-control mt-2 w-100 " disabled>{{projectDate?.project_note}}</textarea>
+
+
+                       </div>
+
+                    </div>
+
+
+                </div>
+                <div class="mt-3">
+                    <tabset>
+                        <tab heading="Work froce Detail" *ngIf="false">
+                          <div class="col-12 p-0">
+                            <div class="table-responsive">
+                              <table class="table table-striped mb-4" *ngIf="rows?.workfroce_detail">
+                                <thead>
+                                  <tr style="background-color:  #006A4D;">
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Work Froce</th>
+                                    <th scope="col">Hour</th>
+                                    <th scope="col">time Type</th>
+                                    <th scope="col">Rate</th>
+                                    <th scope="col">Total Hours</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of projectDate?.workfroce_detail;let row=index">
+                                   <ng-container>
+                                    <th scope="row">{{row+1}}</th>
+                                    <td>{{item?.workforce_name}}</td>
+                                    <td>{{item?.alot_time}}</td>
+                                    <td>{{item?.time_type}}</td>
+                                    <td>{{item?.price}}</td>
+                                    <td>{{item?.price*item?.alot_time}}</td>
+                                </ng-container>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                            </tab>
+                      <tab heading="Materials">
+
+                            <div class="col-12 p-0">
+                              <div class="table-responsive">
+                                <table class="table table-striped mb-4" *ngIf="rows?.project_material_list">
+                                    <thead>
+                                      <tr style="background-color:  #006A4D;">
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Manufacturer</th>
+                                        <th scope="col">Manufacturer#</th>
+                                        <th scope="col">Distributor#</th>
+                                        <th scope="col">Description</th>
+                                        <!-- <th scope="col">Currency</th>
+                                        <th scope="col">Price/u</th> -->
+                                        <th scope="col">Qty</th>
+                                        <th scope="col">Unit</th>
+                                        <!-- <th scope="col">Total</th> -->
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr *ngFor="let item of rows?.project_material_list;let row=index">
+                                        <th scope="row">{{row+1}}</th>
+                                        <td>{{item?.manufacture_name}}</td>
+                                        <td>{{item?.manufacture_no}}</td>
+                                        <td>{{item?.distributor_no}}</td>
+                                        <td>{{item?.Description}}</td>
+                                        <!-- <td>{{item.CurrencyName}}</td>
+                                        <td>{{item?.price}}</td> -->
+                                        <td>{{item?.qty}}</td>
+                                        <td>{{item?.Unit}}</td>
+                                        <!-- <td>{{item?.sub_total}}</td> -->
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+
+                        </tab>
+                      <tab heading="Task Detail">
+
+                            <div class="col-12 p-0">
+                              <div class="table-responsive">
+                              <table class="table table-striped mb-4" *ngIf="rows?.tasks">
+                                <thead>
+                                  <tr style="background-color:  #006A4D;">
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Task Code</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Hours Per Task</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Total Hours</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of rows?.tasks;let row=index">
+                                    <th scope="row">{{row+1}}</th>
+                                    <td>{{item?.task_code}}</td>
+                                    <td title="{{item?.description}}">{{item?.description}}</td>
+                                    <td>{{item?.per_houre_rate}}</td>
+                                    <td>{{item?.qty}}</td>
+                                    <td>{{item?.sub_total}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              </div>
+
+                            </div>
+
+                        </tab>
+
+                        <tab heading="Attachments">
+
+                          <div class="col-12 p-0">
+                            <div class="table-responsive">
+                            <table class="table table-striped mb-4" *ngIf="projectDate?.quotation_attachments">
+                              <thead>
+                                <tr style="background-color:  #006A4D;">
+                                  <th scope="col">ID</th>
+                                  <th scope="col">File</th>
+                                  <th scope="col">Description</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of projectDate?.quotation_attachments;let row=index">
+                                  <td scope="row">{{row+1}}</td>
+                                  <td><a target="_blank" href="{{config?.yourSiteUrl+item?.attachment}}">{{config?.yourSiteUrl+item?.attachment}}</a></td>
+                                  <td title="{{item?.description}}">{{item?.description}}</td>
+
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+
+                          </div>
+
+                      </tab>
+
+
+                        <tab heading="Work History">
+                          <div class="col-12 p-0">
+                            <div class="table-responsive">
+                            <table class="table table-striped mb-4">
+                              <thead>
+                                <tr style="background-color:  #006A4D;">
+                                  <th scope="col">ID</th>
+                                  <th scope="col">User</th>
+                                  <th scope="col">Time</th>
+                                  <th scope="col">Time Type</th>
+                                  <th scope="col">Description</th>
+                                  <th scope="col">Added Date</th>
+                                  <th scope="col">Status</th>
+                                  <th scope="col">Approved By</th>
+                                  <th scope="col">Approved Date</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let h of workforceHistory">
+                                  <td>{{h.id}}</td>
+                                  <td><img class="avatar mr-3 avatar-sm" [src]="config.imgUrl+employee_pic">
+                                    {{employee_name}}
+                                  </td>
+
+                                  <td>{{h.spent_hours}}</td>
+                                  <td>{{h.WorkForceTimeType}}</td>
+                                  <td>{{h.description}}</td>
+                                  <td>{{h.created_at}}</td>
+
+                                  <td>
+                                    <span *ngIf="h.approved == 0">Pending</span>
+                                    <span *ngIf="h.approved == 1">Approved</span>
+                                    <span *ngIf="h.approved == 2">Cancel</span>
+
+                                  </td>
+                                  <td>{{h.approved_teamleader_name}}</td>
+                                  <td>{{h.approved_date}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+                          </tab>
+                    </tabset>
+
+                  </div>
+
+              </div>
+            </div>
+        </div>
+        <app-assign-project  #viewProject ></app-assign-project>
+    </div>
+</div>
+
+
+
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div id="map-canvas">
+    </div>
+  </div>
+</ng-template>

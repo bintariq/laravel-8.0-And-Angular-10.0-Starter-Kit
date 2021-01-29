@@ -13,7 +13,6 @@ import { ConfigService } from 'src/app/service/config.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
   providers: [ProfileService]
-
 })
 export class ProfileComponent extends AppComponentBase {
   currentUser = JSON.parse(localStorage.getItem('user'));

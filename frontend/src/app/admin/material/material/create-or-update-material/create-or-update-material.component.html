@@ -1,0 +1,215 @@
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block" >
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/material/material">{{'Material' | translate}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{'Add' | translate}}</li>
+                </ol>
+            </nav>
+            </div>
+            
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="col-md-12">
+
+                        <form [formGroup]="createMaterial" (ngSubmit)="onSubmitMaterial()">
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="name">{{'Material Name' | translate}}</label>
+
+                                    <input class="form-control" formControlName="name"  placeholder="{{'Material Name' | translate}}" id="name" [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.name.errors }"/>
+                                    <div *ngIf="submittedCreateMaterial && cm.name.errors" class="invalid-feedback">
+                                        <div *ngIf="cm.name.errors.required">{{'Material Name is required' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="category_id">{{'Material Category' | translate}}</label>
+                                    <ng-select
+                                    formControlName="category_id" 
+                                    [items]="MaterialCategories"
+                                    placeholder="Select Material Category"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.category_id.errors }">
+                                    <ng-template ng-label-tmp let-item="item">
+                                        <!-- <img height="15" width="15" [src]="item.thumbnailUrl"/> -->
+                                        <span *ngIf="item.parent_id">{{item.fetch_material_catrgory.name}} >> {{item.name}}</span>
+                                        <span *ngIf="!item.parent_id">{{item.name}}</span>
+                                    </ng-template>   
+                                </ng-select>
+                                    <!-- <select class="form-control" id="category_id" formControlName="category_id"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.category_id.errors }">
+                                        <option [ngValue]="null">{{'Select Category' | translate}}</option>
+                                        <option [value]="c.id" *ngFor="let c of MaterialCategories">{{c.name}}</option>
+                                    </select> -->
+                                    
+                                    <div *ngIf="submittedCreateMaterial && cm.category_id.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="cm.category_id.errors.required">{{'Material Category is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="unit_price">{{'Sale Price' | translate}}</label>
+
+                                    <input type="number" placeholder="{{'Sale Price' | translate}}"
+                                    class="form-control" id="unit_price" formControlName="unit_price"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.unit_price.errors }"/>
+                                    <div *ngIf="submittedCreateMaterial && cm.unit_price.errors" class="invalid-feedback">
+                                        <div *ngIf="cm.unit_price.errors.required">{{'Sale Price is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="currency">{{'Currency' | translate}}</label>
+                                    <ng-select
+                                    formControlName="currency" 
+                                    [items]="currenies"
+                                    placeholder="Select Currency"
+                                    bindLabel="title"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.currency.errors }">
+                                    </ng-select>
+                                    <!-- <select class="form-control" id="currency" formControlName="currency"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.currency.errors }">
+                                        <option [ngValue]="null">{{'Select Currency' | translate}}</option>
+                                        <option [value]="c.id" *ngFor="let c of currenies">{{c.title | translate}}</option>
+                                    </select> -->
+
+                                    <div *ngIf="submittedCreateMaterial && cm.currency.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="cm.currency.errors.required">{{'Currency is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="unit">{{'Unit' | translate}}</label>
+                                    <ng-select
+                                    formControlName="unit" 
+                                    [items]="units"
+                                    placeholder="Select Unit"
+                                    bindLabel="type"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.unit.errors }">
+                                    </ng-select>
+                                    <!-- <select class="form-control" id="unit" formControlName="unit"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.unit.errors }">
+                                        <option [ngValue]="null">Select Unit</option>
+                                        <option [value]="c.id" *ngFor="let c of units">{{c.type | translate}}</option>
+                                    </select> -->
+
+                                    
+                                    <div *ngIf="submittedCreateMaterial && cm.unit.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="cm.unit.errors.required">{{'Unit is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="manufacturer_id">{{'Select Manufacturer' | translate}}</label>
+                                    <ng-select
+                                    formControlName="manufacturer_id" 
+                                    [items]="manufacturers"
+                                    placeholder="Select Manufacturer"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.manufacturer_id.errors }">
+                                    </ng-select>
+                                    <!-- <select class="form-control" id="unit" formControlName="unit"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.unit.errors }">
+                                        <option [ngValue]="null">Select Unit</option>
+                                        <option [value]="c.id" *ngFor="let c of units">{{c.type | translate}}</option>
+                                    </select> -->
+
+                                    
+                                    <div *ngIf="submittedCreateMaterial && cm.manufacturer_id.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="cm.manufacturer_id.errors.required">{{'Manufacturer is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="sku_no">{{'Manufacturer #' | translate}}</label>
+                                    <input type="text" placeholder="{{'Manufacturer #' | translate}}"
+                                    class="form-control" id="sku_no" formControlName="sku_no"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.sku_no.errors }"/>
+                                    <div *ngIf="submittedCreateMaterial && cm.sku_no.errors" class="invalid-feedback">
+                                        <div *ngIf="cm.sku_no.errors.required">{{'Manufacturer # is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="vendor_id">{{'Select Distributor' | translate}}</label>
+                                    <ng-select
+                                    formControlName="vendor_id" 
+                                    [items]="Vendors"
+                                    placeholder="Select Distributor"
+                                    bindLabel="vender_name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.vendor_id.errors }">
+                                    </ng-select>
+                                    <!-- <select class="form-control" id="vendor_id" formControlName="vendor_id"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.vendor_id.errors }">
+                                        <option [ngValue]="null">{{'Select Vendor' | translate}}</option>
+                                        <option [value]="v.id" *ngFor="let v of Vendors">{{v.vender_name}}</option>
+                                    </select> -->
+                                    
+                                    <div *ngIf="submittedCreateMaterial && cm.vendor_id.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="cm.vendor_id.errors.required">{{'Distributor is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="reference_no_vender">{{'Distributor #' | translate}}</label>
+
+                                    <input type="text" placeholder="{{'Distributor' | translate}}"
+                                    class="form-control" id="reference_no_vender" formControlName="reference_no_vender"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.reference_no_vender.errors }"/>
+                                    <div *ngIf="submittedCreateMaterial && cm.reference_no_vender.errors" class="invalid-feedback">
+                                        <div *ngIf="cm.reference_no_vender.errors.required">{{'Distributor # is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-12">
+                                    <label class="form-control-label" for="description">{{'Description' | translate}}</label>
+
+                                    <textarea placeholder="{{'Description' | translate}}"
+                                    class="form-control" id="description" formControlName="description"
+                                    [ngClass]="{ 'is-invalid': submittedCreateMaterial && cm.description.errors }"></textarea>
+                                    <div *ngIf="submittedCreateMaterial && cm.description.errors" class="invalid-feedback">
+                                        <div *ngIf="cm.description.errors.required">{{'Description is required' | translate}}</div>
+                                    </div>
+                                </div>
+                             
+                            </div>
+                            
+
+                            <div class="row justify-content-end">
+                                <div class="buttons">
+                                    <button routerLink="/admin/material/material" class="btn btn-secondary">{{'Cancel' | translate}}</button>
+                                    <button type="submit" class="btn btn-primary">{{'Save' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

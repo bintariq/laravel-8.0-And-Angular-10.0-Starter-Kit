@@ -4,14 +4,14 @@
         <div class="header-body">
             <div class="row align-items-center py-4">
                 <div class="col-lg-6 col-7">
-                    <h6 class="h2 text-white d-inline-block mb-0">{{'Locations' | translate}}</h6>
+                    <h6 class="h2 text-white d-inline-block mb-0">{{'Sites' | translate}}</h6>
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
                             <li class="breadcrumb-item"><a routerLink="/admin/dashboard"><i class="fas fa-home"></i></a>
                             </li>
                             <li class="breadcrumb-item"><a routerLink="/admin/dashboard">{{'Dashboard' | translate}}</a></li>
                             <li class="breadcrumb-item active" aria-current="page" routerLink="/admin/view-location">
-                                {{'Locations' | translate}}</li>
+                                {{'Sites' | translate}}</li>
                         </ol>
                     </nav>
                 </div>
@@ -100,11 +100,46 @@
                                          </span>
                                 </div>
                                 <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="name">{{'Pre Sold Hours' | translate}}</label>
+                                    <input type="number" placeholder="{{'Pre Sold Hours' | translate}}" class="form-control mb-3" id="name"
+                                        formControlName="presold_hours"
+                                        [ngClass]="{ 'is-invalid': submittedCreateLocation && cu.presold_hours.errors }" />
+
+                                    <div *ngIf="submittedCreateLocation && cu.presold_hours.errors" class="invalid-feedback">
+                                        <div *ngIf="cu.presold_hours.errors.required">{{'Pre Sold Hours is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Team Leader</label>
+                                    <ng-select
+                                    formControlName="teamleader_id" 
+                                    [items]="teamleaderList"
+                                    placeholder="Select Team Leader"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submitted && f.teamleader_id.errors }">
+                                    </ng-select>
+                                    <div *ngIf="submitted && f.teamleader_id.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="f.teamleader_id.errors.required">Team Leader is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="address">{{'Address' | translate}}</label>
+                                    <input class="form-control" id="address" formControlName="address" (onKeyup)="AddressChange($event)" (onAddressChange)="AddressChange($event)" ngx-google-places-autocomplete [ngClass]="{ 'is-invalid': submittedCreateLocation && f.address.errors }" />
+
+                                    <div *ngIf="submittedCreateLocation && f.address.errors" class="invalid-feedback">
+                                        <div *ngIf="f.address.errors.required">{{'Address is required' | translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
                                     <label class="form-control-label" for="is_active">{{'Status' | translate}}</label>
                                     <select class="form-control mb-3" id="is_active" formControlName="is_active"
                                         [ngClass]="{ 'is-invalid': submittedCreateCurrency && cu.is_active.errors }">
+                                        <option value="">{{'Select Status' | translate}}</option>
                                         <option value="1">{{'Active' | translate}}</option>
-                                        <option value="0">{{'DeActive' | translate}}</option>
+                                        <option value="0">{{'Inactive' | translate}}</option>
                                     </select>
                                     <div *ngIf="submittedCreateCurrency && cu.is_active.errors" class="invalid-feedback">
                                         <div *ngIf="cu.is_active.errors.required">{{'Value is required' | translate}}</div>
@@ -115,7 +150,7 @@
                                 <div class="buttons">
                                     <a routerLink="/admin/view-location"
                                         class="btn btn-secondary">{{'Cancel' | translate}}</a>
-                                    <button type="submit" class="btn btn-primary">{{'Save Changes' | translate}}</button>
+                                    <button type="submit" class="btn btn-primary">{{'Save' | translate}}</button>
                                 </div>
                             </div>
                         </form>

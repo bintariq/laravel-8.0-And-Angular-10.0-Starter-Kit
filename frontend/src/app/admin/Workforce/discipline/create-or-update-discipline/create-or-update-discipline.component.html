@@ -1,0 +1,111 @@
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-8 col-7">
+            
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/workfore/discipline">{{'Disciplines' | translate}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{'Add' | translate}}</li>
+                </ol>
+            </nav>
+            </div>
+            
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="col-md-12">
+
+                        <form [formGroup]="createDiscipline" (ngSubmit)="onSubmitDiscipline()">
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="name">{{'Name' | translate}}</label>
+
+                                    <input type="text" placeholder="{{'Name' | translate}}"
+                                    class="form-control" id="name" formControlName="name" name="name"
+                                    [ngClass]="{ 'is-invalid': submittedCreateDiscipline && cc.name.errors }"/>
+                                    <div *ngIf="submittedCreateDiscipline && cc.name.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.name.errors.required">{{'Name is required' | translate}}</div>
+                                        <div *ngIf="cc.name.errors.pattern">{{'Enter alphabets only' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="parent_id">{{'Parent Discipline' | translate}}</label>
+                                    <ng-select
+                                    formControlName="parent_id" 
+                                    [items]="parentCategories"
+                                    placeholder="Select Parent Discipline"
+                                    bindLabel="name"
+                                    bindValue="id">
+                                    </ng-select>
+                                    <!-- <select class="form-control" id="parent_id" formControlName="parent_id"
+                                    [ngClass]="{ 'is-invalid': submittedCreateDiscipline && cc.parent_id.errors }">
+                                        <option [ngValue]="null">Select Parent</option>
+                                        <option [value]="c.id" *ngFor="let c of parentCategories">{{c.name}}</option>
+                                    </select> -->
+                                    
+                                    
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="is_active">{{'Status' | translate}}</label>
+
+                                    <select class="form-control" formControlName="is_active" id="is_active" [ngClass]="{ 'is-invalid': submittedCreateDiscipline && cc.is_active.errors }">
+                                        <option value="">{{'Select Status' | translate}}</option>
+                                        <option value="1">{{'Active' | translate}}</option>
+                                        <option value="0">{{'Inactive' | translate}}</option>
+                                    </select>
+                                    <span class="svg-icon">
+                                        <svg width="20px" height="20px" viewBox="0 0 16 16"
+                                            class="bi bi-chevron-down" fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </span>
+                                    <div *ngIf="submittedCreateDiscipline && cc.is_active.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.is_active.errors.required">{{'Status is required' | translate}}</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group col-lg-12">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submittedCreateDiscipline && cc.description.errors }" id="description" rows="3"></textarea>
+                                    
+                                    <div *ngIf="submittedCreateDiscipline && cc.description.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.description.errors.required">Description is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row justify-content-end">
+                                <div class="buttons">
+                                    <button routerLink="/admin/workfore/discipline" class="btn btn-secondary">{{'Cancel' | translate}}</button>
+                                    <button type="submit" class="btn btn-primary">{{'Save' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

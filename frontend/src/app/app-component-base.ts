@@ -9,6 +9,7 @@ import * as fromCountry from './store/country/country.reducer';
 import * as countryActions from './store/country/country.actions';
 import { PermissionCheckerService } from './service/PermissionCheckerService.service';
 import { ExcelService } from './service/excel.service';
+import { ConfirmationDialogService } from './shared/confirmation-dialog/confirmation-dialog.service';
 export abstract class AppComponentBase {
     localization: TranslateService;
     spinnerService: NgxSpinnerService;
@@ -19,6 +20,7 @@ export abstract class AppComponentBase {
     permission: PermissionCheckerService;
     store: Store;
     excelService:ExcelService
+   confirmationDialogService: ConfirmationDialogService
     constructor(injector: Injector) {
         this.localization = injector.get(TranslateService);
         this.spinnerService = injector.get(NgxSpinnerService);
@@ -29,6 +31,7 @@ export abstract class AppComponentBase {
         this.permission=injector.get(PermissionCheckerService);
         this.excelService=injector.get(ExcelService);
         this.store = injector.get(Store);
+        this.confirmationDialogService = injector.get(ConfirmationDialogService);
     }
     isGranted(nameKey): boolean {
         var currentUser = JSON.parse(localStorage.getItem('user'));

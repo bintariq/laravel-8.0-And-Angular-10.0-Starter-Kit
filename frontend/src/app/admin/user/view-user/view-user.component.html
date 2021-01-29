@@ -35,14 +35,27 @@
                         <div class="col-md-6">
                             <h2 class="mb-0">{{'Users' | translate}}</h2>
                         </div>
-                        <div class="col-md-4 d-flex justify-content-between">
-                            <select class="form-control mr-2" (change)="setSearchColumn($event)">
-                                <option value="id">Id</option>
-                                <option value="email">Email</option>
-                                <option value="first_name">First Name</option>
-                            </select>
-                            <input type="text" class="form-control rounded-lg"
+                        <div class="col-md-6 d-flex justify-content-end">
+                            <div class="form-group mr-2 mb-0">
+                                <select class="form-control" (change)="setSearchColumn($event)">
+                                    <option value="id">{{'Id' | translate}}</option>
+                                    <option value="title">{{'Name' | translate}}</option>
+                                    <option value="created_at">{{'Created Date' | translate}}</option>
+                                </select>
+                                <span class="svg-icon">
+                                    <svg width="20px" height="20px" viewBox="0 0 16 16"
+                                        class="bi bi-chevron-down" fill="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <div class="form-group mb-0">
+                                <input type="text" class="form-control rounded-lg"
                                 placeholder="Search" (keyup)="searchRecord($event)" />
+                                </div>
+                            
                         </div>
                     </div>
                 </div>

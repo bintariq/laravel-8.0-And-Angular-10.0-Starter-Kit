@@ -60,20 +60,17 @@
                                         <i class="bg-success"></i>
                                         <span class="status">{{'Active' | translate}}</span>
                                     </span>
-                                    <span *ngIf="row.is_active == 2" class="badge badge-dot mr-4">
-                                        <i class="bg-warning"></i>
-                                        <span class="status">{{'Pending' | translate}}</span>
-                                    </span>
+                                  
                                     <span *ngIf="row.is_active == 0" class="badge badge-dot mr-4">
                                         <i class="bg-danger"></i>
-                                        <span class="status">{{'DeActive' | translate}}</span>
+                                        <span class="status">{{'InActive' | translate}}</span>
                                     </span>
                                 </ng-template>
                             </ngx-datatable-column>
                             <ngx-datatable-column *ngIf='column.name === "Actions"' name="Actions" prop="actions">
                                 <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
                          
-                                    <td>
+                                    <td *ngIf="row.id != 1">
                                         <button *ngIf="isGranted('Update Languages')" class="btn text-white btn-icon-only bg-primary" routerLink="/admin/create-update-language/{{row.id}}"><i class="fas fa-pencil-alt"></i> </button>
                                         <button *ngIf="isGranted('Delete Languages')" class="btn text-white btn-icon-only bg-danger" (click)="delete(row.id)"><i class="far fa-trash-alt"></i></button>
                                     </td>

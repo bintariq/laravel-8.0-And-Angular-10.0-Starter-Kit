@@ -1,0 +1,137 @@
+
+<!-- Header -->
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+      <div class="header-body">
+      <div class="row align-items-center py-4">
+          <div class="col-lg-6 col-7">
+          
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block" >
+              <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+              <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+
+              <li class="breadcrumb-item active" aria-current="page">{{'Quotations'}}</li>
+              </ol>
+          </nav>
+          </div>
+          <div class="col-lg-6 col-5 text-right">
+              <a  href="javascript:void(0)" class="btn btn-info" (click)="exportExcel()" >{{'Export CSV'}}</a>
+              <a *ngIf="isGranted('Create Qoutation')"  href="javascript:void(0)" (click)="createNew()" class="btn btn-neutral">{{'Add New'}}</a>
+          </div>
+      </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+  <div class="row">
+      <div class="col">
+          <div class="card">
+              <!-- Card header -->
+              <div class="card-header border-0">
+                  <div class="row align-items-center justify-content-between">
+                      <div class="col-md-6">
+                          <h2 class="mb-0">{{'Quotations'}}</h2>
+                      </div>
+                      <div class="col-md-4 d-flex justify-content-between">
+                          <select class="form-control mr-2">
+                              <option>Id</option>
+                          </select>
+                          <input
+                          type="text"
+                          class="form-control rounded-lg"
+                          placeholder="Type to filter the name column..."
+                          (keyup)="updateFilter($event)"
+                        />
+                      </div>
+                  </div>
+              </div>
+              <!-- Light table -->
+              <!-- Light table -->
+            
+            <div class="card-body">
+              <div class="col-12 px-0 mb-3">
+                <ng-select [items]="allColumns" [multiple]="true" bindLabel="name"  [selectableGroup]="true"
+                [closeOnSelect]="false" [(ngModel)]="columns">
+                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name | uppercase}}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                    <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name}}
+                </ng-template>
+            </ng-select>
+               </div>
+              <ngx-datatable
+                class="bootstrap"
+                [rows]="rows"
+                [columnMode]="ColumnMode.force"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [scrollbarH]="true"
+                rowHeight="auto"
+                [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage($event)"
+              >
+              <ngx-datatable-column name="ID" prop="id" [width]="100" [resizeable]="false"
+              [sortable]="false"
+              [draggable]="false"
+              [canAutoResize]="false">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                  {{ value }}
+                </ng-template>
+              </ngx-datatable-column>
+              
+                <ngx-datatable-column *ngFor="let col of columns" [width]="250" [name]="col.name" [prop]="col.prop"> </ngx-datatable-column>
+             
+                <ngx-datatable-column name="Status" prop="quotationStatusName" [width]="150">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                  <i class="badge text-white"  [ngClass]="{'bg-primary':value === 'Approved', 'bg-dark':value === 'Quoted', 'bg-warning':value === 'Draft', 'bg-danger':value === 'Cancel' }"> {{ value }}</i>
+                </ng-template>
+              </ngx-datatable-column>
+
+                <ngx-datatable-column name="Actions" [width]="250">
+                    <ng-template let-value="value"  let-row="row" ngx-datatable-cell-template>
+                      <!-- <button *ngIf="isGranted('Delete Qoutation') && (row.quotation_status_code!='approved')" class="btn text-white btn-icon-only bg-danger" (click)="delete(row.id)"><i class="far fa-trash-alt"></i></button>
+                      <button *ngIf="isGranted('Update Qoutation') && (row.quotation_status_code!='approved')" class="btn text-white btn-icon-only bg-primary" [routerLink]="['/admin/qoutation/createOrEdit']"
+                      [queryParams]="{id: row.id}" 
+                      ><i class="fas fa-pencil-alt"></i> </button>
+                      <button class="btn text-white btn-icon-only bg-warning" *ngIf="(row.IsDraft!=1 && row.isExpired!=1) || row.IsGenerated==1" (click)="ViewQuotation(row.id)"><i class="fa fa-eye" aria-hidden="true"></i></button> -->
+                      <div class="btn-group" dropdown>
+                        <button id="button-basic" dropdownToggle type="button" class="btn btn-link"
+                                aria-controls="dropdown-basic">
+                                <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                            role="menu" aria-labelledby="button-basic">
+
+                          <li role="menuitem"><a class="dropdown-item" *ngIf="isGranted('Update Qoutation') && (row.quotation_status_code!='approved')" [routerLink]="['/admin/qoutation/createOrEdit']"
+                            [queryParams]="{id: row.id}"><i class="fa fa-edit"></i>Edit</a></li>
+                          <li role="menuitem"><a class="dropdown-item" *ngIf="isGranted('Delete Qoutation') && (row.quotation_status_code!='approved')" (click)="delete(row.id)"><i class="fa fa-trash"></i>Delete</a></li>
+                          <li role="menuitem"><a class="dropdown-item" *ngIf="(row.IsDraft!=1 && row.isExpired!=1) || row.IsGenerated==1" [routerLink]="['/view-quotation']" target="_blank"
+                            [queryParams]="{id: row.id}"><i class="fa fa-eye"></i>View</a></li>
+                          <li role="menuitem"><a class="dropdown-item" *ngIf="row.quotationStatusName=='Quoted'" (click)="changeQuotationStatus(row.id)"><i class="fa fa-check"></i>Approved</a></li>
+                          <!-- <li class="divider dropdown-divider"></li> -->
+                          <!-- <li role="menuitem"><a class="dropdown-item" href="#">Download</a> -->
+                          <!-- <li role="menuitem"><a class="dropdown-item" href="#">Print</a></li>
+                          <li role="menuitem"><a class="dropdown-item" href="#">View PDF</a></li>
+                          <li class="divider dropdown-divider"></li>
+                          <li role="menuitem"><a class="dropdown-item" href="#">Download</a>
+                          </li> -->
+                        </ul>
+                      </div>
+                    </ng-template>
+                    
+                  </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+
+             
+            
+          </div>
+      </div>
+        <app-view-quotation  #viewQuotaation ></app-view-quotation>
+  
+  </div>
+</div>
+

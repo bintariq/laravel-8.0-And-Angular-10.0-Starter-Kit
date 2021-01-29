@@ -1,0 +1,163 @@
+<div bsModal #createOrEditModal="bs-modal"   data-keyboard="false"  [config]="{backdrop: 'static'}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal"
+     aria-hidden="true">
+    <div class="modal-dialog rounded-0 overflow-hidden modal-lg">
+        <div class="modal-content" >
+        <div class="modal-header align-items-center p-4">
+                    <h4 class="modal-title">
+                        Add Time (Hour) 
+                    </h4>
+                    <button type="button" class="close" (click)="close()" [attr.aria-label]="('Close')" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+        <div class="modal-body py-0 px-4" id="contentToConvert">
+            <!-- <div class="row">
+                <div class="col-md-4 mb-3">
+                 <div class="d-flex flex-column">
+                  <span class="text-body font-weight-bold">User Name</span>
+                  <span class="mt-2">
+                    <i class="fas fa-user-shield text-warning"></i>
+                    
+                    <span class="text-body-secondary ml-2">{{projectDate?.UserName}} </span>
+                  </span>
+                 </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex flex-column">
+                    <span class="text-body font-weight-bold">Project Reference#</span>
+                    <span class="mt-2">
+                      <i class="fas fa-project-diagram"  style="color: purple;"></i>
+                      
+                      <span class="text-body-secondary ml-2">{{projectDate?.project_reference_no}}</span>
+                    </span>
+                   </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex flex-column">
+                    <span class="text-body font-weight-bold">Zone Name</span>
+                    <span class="mt-2">
+                      <i class="fas fa-map-marker-alt text-success"></i>
+                      
+                      <span class="text-body-secondary ml-2">{{projectDate?.zoneName}}</span>
+                    </span>
+                   </div>
+                   
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex flex-column">
+                    <span class="text-body font-weight-bold">Sites Name</span>
+                    <span class="mt-2">
+                      <i class="fas fa-map-marked" style="color:deepskyblue;"></i>
+                      
+                      <span class="text-body-secondary ml-2">{{projectDate?.SitesName}}</span>
+                    </span>
+                   </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex flex-column">
+                    <span class="text-body font-weight-bold">Client Name</span>
+                    <span class="mt-2">
+
+                      <i class="fas fa-user" style="color: cyan;"></i>
+                      <span class="text-body-secondary ml-2">{{projectDate?.ClientName}}</span>
+                    </span>
+                   </div>
+                 
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex flex-column">
+                    <span class="text-body font-weight-bold">Currency Title</span>
+                    <span class="mt-2">
+                      <i class="fas fa-dollar-sign"></i>
+                      
+                      <span class="text-body-secondary ml-2">{{projectDate?.CurrencyTitle}}</span>
+                    </span>
+                   </div>
+                   
+                </div>
+                <div class="col-md-4 mb-3">
+                  <div class="d-flex flex-column">
+                    <span class="text-body font-weight-bold">Created Date</span>
+                    <span class="mt-2">
+                      <i class="fas fa-calendar-alt" style="color:goldenrod"></i>
+                      
+                      <span class="text-body-secondary ml-2">{{projectDate?.project_created_date}}</span>
+                    </span>
+                   </div>
+                  
+                </div>
+            </div> -->
+            <!-- <div class="row">
+                <div class="col-md-4">
+                 <span> User Name#: {{projectDate?.UserName}} </span>
+                </div>
+                <div class="col-md-4">
+                 <span> Project Reference#: {{projectDate?.project_reference_no}} </span>
+                </div>
+                <div class="col-md-4">
+                    <span>Zone Name:  {{projectDate?.zoneName}}</span>
+                </div>
+                <div class="col-md-4">
+                    <span> Sites Name:  {{projectDate?.SitesName}}</span>
+                </div>
+                <div class="col-md-4">
+                 <span> Client Name:  {{projectDate?.ClientName}} </span>
+                </div>
+                <div class="col-md-4">
+                    <span>Currency Title:  {{projectDate?.CurrencyTitle}}</span>
+                </div>
+                <div class="col-md-4">
+                    <span>Created Date:{{projectDate?.project_created_date}}</span>
+                </div>
+            </div> -->
+            
+                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"  novalidate>
+                    <div class="row">
+                    <div class="form-group col-12 col-md-6">
+                        <label>Time Type</label>
+                        <select name="title" class="form-control" [(ngModel)]="model.timeType" #timeType="ngModel" [ngClass]="{ 'is-invalid': f.submitted && timeType.invalid }" required>
+                            <option [ngValue]="undefined">--Select Time Type--</option>
+                            <option  value="normal">Normal Time</option>
+                            <option  value="over_time">Over Time</option>
+                            <option  value="weekend">Holiday</option>
+                            <option  value="g_h" >GH</option>
+                        </select>
+                        <div *ngIf="f.submitted && timeType.invalid" class="invalid-feedback">
+                            <div *ngIf="timeType.errors.required">TimeType is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6">
+                        <label>Hour</label>
+                        <input type="number" max="15" name="hours" class="form-control" [(ngModel)]="model.hour" #hour="ngModel" [ngClass]="{ 'is-invalid': f.submitted && hour.invalid }" required>
+                        <div *ngIf="f.submitted && hour.invalid" class="invalid-feedback">
+                            <div *ngIf="hour.errors.required">Hour is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Description</label>
+                        <textarea type="text" name="Description" class="form-control" [(ngModel)]="model.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" ></textarea>
+                        <div *ngIf="f.submitted && description.invalid" class="invalid-feedback">
+                            <div *ngIf="description.errors.required">Description is required</div>
+                        </div>
+                    </div>
+                <div class="col-12 text-right">
+                    <button class="btn btn-secondary" type="reset" (click)="close()">Cancel</button>
+                    <button class="btn btn-primary mr-1">Save</button>
+                    
+                </div>
+            </div>
+            </form>
+            
+
+            
+        </div>
+           
+        
+         <div class="modal-footer">
+            <!-- <button class="btn btn-primary mr-1" (click)="generatePDF('download')" >Save</button>
+            <button class="btn btn-danger mr-1" (click)="close()" >Close</button> -->
+        </div> 
+        </div>
+    </div>
+</div>
+

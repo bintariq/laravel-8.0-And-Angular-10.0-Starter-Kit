@@ -1,0 +1,339 @@
+
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+            
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block" >
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/workfore/workfore">{{'Work Force'}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{'Add'}}</li>
+                </ol>
+            </nav>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <!-- <div class="row align-items-center justify-content-between">
+                        <div class="col-md-6">
+                            <h2 class="mb-0" *ngIf="!EmployeeID">Create  Workforce</h2>
+                            <h2 class="mb-0" *ngIf="EmployeeID" >Edit Workforce</h2>
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-12">
+                        <form [formGroup]="createOrEditform" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label>Name</label>
+                                    <input type="text" formControlName="employeeName" class="form-control" placeholder="Name" [ngClass]="{ 'is-invalid': submitted && f.employeeName.errors }" />
+                                    <div *ngIf="submitted && f.employeeName.errors" class="invalid-feedback">
+                                        <div *ngIf="f.employeeName.errors.required">Name is required</div>
+                                        
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group col-lg-6">
+                                    <label>Discipline</label>
+                                    
+                                    <select class="form-control" id="decipline_id" formControlName="decipline_id"
+                                    [ngClass]="{ 'is-invalid': submitted && f.decipline_id.errors }">
+                                        <option value="">Select Discipline</option>
+                                        <option [value]="c.id" *ngFor="let c of getDeciplines">
+                                            
+                                            {{c.name}}
+                                            
+                                        </option>
+                                    </select>
+                        
+                                    <span class="svg-icon">
+                                        <svg width="20px" height="20px" viewBox="0 0 16 16"
+                                            class="bi bi-chevron-down" fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </span>
+                                    <div *ngIf="submitted && f.decipline_id.errors" class="invalid-feedback">
+                                        <div *ngIf="f.decipline_id.errors.required">Discipline is required</div>
+                                    </div>
+                                </div> -->
+
+                                <div class="form-group col-lg-6">
+                                    <label>Category</label>
+                                    <ng-select
+                                    formControlName="category_id" 
+                                    [items]="catgoriesList"
+                                    placeholder="Select Category"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submitted && f.category_id.errors }">
+                                    </ng-select>
+
+                                    <!-- <select formControlName="category_id" [ngClass]="{ 'is-invalid': submitted && f.category_id.errors }" class="form-control">
+                                        <option value="">Select Category</option>
+                                        <option *ngFor="let item of catgoriesList" [value]="item.id">{{item.workforceDeciplineName}}>>{{item.name}}</option>
+                                    </select> -->
+                                    
+                                    <div *ngIf="submitted && f.category_id.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="f.category_id.errors.required">Category is required</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Job Nature</label>
+                                    <ng-select
+                                    formControlName="jobNature" 
+                                    (change)="getAgency($event)"
+                                    [items]="jobNatureList"
+                                    placeholder="Select Nature"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submitted && f.jobNature.errors }">
+                                    </ng-select>
+                                    <!-- <select formControlName="jobNature" [ngClass]="{ 'is-invalid': submitted && f.jobNature.errors }" class="form-control">
+                                        <option value="">Select Nature</option>
+                                        <option *ngFor="let item of jobNatureList; let i=index" [value]="item.id">{{item.name}}</option>
+                                    </select> -->
+                                    <div *ngIf="submitted && f.jobNature.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="f.jobNature.errors.required">Job Nature is required</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6" *ngIf="jobContractual">
+                                    <label>Agency</label>
+                                    <ng-select
+                                    formControlName="aginceID" 
+                                    [items]="agencyList"
+                                    placeholder="Select Agency"
+                                    bindLabel="agency_name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submitted && f.aginceID.errors }">
+                                    </ng-select>
+                                    <!-- <select formControlName="aginceID" class="form-control">
+                                        <option value="">Select Agency</option>
+                                        <option *ngFor="let item of agencyList; let i=index" [value]="item.id">{{item.agency_name}}</option>
+                                    </select> -->
+                                    <div *ngIf="submitted && f.zone.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="f.aginceID.errors.required">Agency is required</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Zone</label>
+                                    <ng-select
+                                    formControlName="zone" 
+                                    [items]="zoneList"
+                                    placeholder="Select Zone"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submitted && f.zone.errors }">
+                                    </ng-select>
+                                    <!-- <select formControlName="zone" class="form-control">
+                                        <option value="">Select Zone</option>
+                                        <option *ngFor="let item of zoneList; let i=index" [value]="item.id">{{item.name}}</option>
+                                    </select> -->
+                                    <div *ngIf="submitted && f.zone.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="f.zone.errors.required">Zone is required</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="form-group col-lg-6">
+                                    <label>Job Nature</label>
+                                    <input type="text" formControlName="jobNature" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.jobNature.errors }" />
+                                    <div *ngIf="submitted && f.jobNature.errors" class="invalid-feedback">
+                                        <div *ngIf="f.jobNature.errors.required">Job Nature is required</div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="form-group col-lg-6">
+                                    <label>Roll</label>
+                                    <input type="text" formControlName="roll" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.roll.errors }" />
+                                    <div *ngIf="submitted && f.roll.errors" class="invalid-feedback">
+                                        <div *ngIf="f.roll.errors.required">Roll is required</div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="form-group col-lg-6">
+                                    <label>Roll</label>
+                                    <select formControlName="roll" [ngClass]="{ 'is-invalid': submitted && f.roll.errors }" class="form-control">
+                                        <option value="">Select Roll</option>
+                                        <option *ngFor="let item of rollList; let i=index" [value]="item.id">{{item.name}}</option>
+                                    </select>
+                                    <div *ngIf="submitted && f.roll.errors" class="invalid-feedback">
+                                        <div *ngIf="f.roll.errors.required">Roll is required</div>
+                                    </div>
+                                </div> -->
+    
+                               
+    
+                                <!-- <div class="form-group col-lg-6">
+                                    <label>Discipline</label>
+                                    <select formControlName="discipline" [ngClass]="{ 'is-invalid': submitted && f.discipline.errors }" class="form-control">
+                                        <option value="">Select Discipline</option>
+                                        <option *ngFor="let item of disciplaneList; let i=index" [value]="item.id">{{item.name}}</option>
+                                    </select>
+                                    <div *ngIf="submitted && f.discipline.errors" class="invalid-feedback">
+                                        <div *ngIf="f.discipline.errors.required">Discipline is required</div>
+                                    </div>
+                                </div> -->
+                                
+                                <div class="form-group col-lg-6">
+                                    <label>Country</label>
+                                    <ng-select
+                                    formControlName="country" 
+                                    (change)="getStatus($event)"
+                                    [items]="countryList"
+                                    placeholder="Select Country"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
+                                    </ng-select>
+                                    
+                                    <div *ngIf="submitted && f.country.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="f.country.errors.required">Country is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6" >
+                                    <label>State</label>
+                                    <ng-select
+                                    (change)="getCity($event)"
+                                    formControlName="state" 
+                                    [items]="statuesList"
+                                    placeholder="Select State"
+                                    bindLabel="name"
+                                    bindValue="id" >
+                                    </ng-select>
+                                    <!-- <select formControlName="state" (change)="getCity($event.target.value)"  [ngClass]="{ 'is-invalid': submitted && f.state.errors }" class="form-control">
+                                        <option [ngValue]="null">Select State</option>
+                                        <option *ngFor="let item of statuesList; let i=index" [value]="item.id">{{item.name}}</option>
+                                    </select> -->
+                                   
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>City</label>
+                                    <ng-select
+                                    
+                                    formControlName="city" 
+                                    [items]="cityList"
+                                    placeholder="Select city"
+                                    bindLabel="name"
+                                    bindValue="id">
+                                    </ng-select>
+                                    <!-- <select formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
+                                        <option [ngValue]="null">Select City</option>
+                                        <option *ngFor="let item of cityList; let i=index" [value]="item.id">{{item.name}}</option>
+                                    </select> -->
+                                    
+                                </div>
+                                
+                                
+                                <div class="form-group col-lg-6">
+                                    <label>Phone</label>
+                                    <div class="input-group">
+                                        <div class="col-md-6 p-0">
+                                            <ng-select appearance="outline" [searchable]="true"
+                                                placeholder="Country Code" [clearable]="false" class="cs-select w-100"
+                                                required formControlName="country_code">
+                                                <ng-option value="{{c.callingCodes[0]}}"
+                                                    *ngFor="let c of config.countriesList">
+                                                    <img class="img-fluid mr-2" src="{{c.flag}}" width="30px" />
+                                                    {{c.name}}
+                                                </ng-option>
+
+                                            </ng-select>
+                                            <div *ngIf="submitted && f.country_code.errors"
+                                                class="invalid-feedback d-block">
+                                                <div *ngIf="f.country_code.errors.required">{{'Code is required' | translate}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 pr-0">
+                                            <input type="text" formControlName="phone"  class="form-control w-100" id="phone" aria-describedby="phoneHelp" placeholder="XXXX XXX XXXX" mask="0000 000 0000" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+
+                                            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                                <div *ngIf="f.phone.errors.required">Phone is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <input type="text" formControlName="phone" class="form-control" placeholder="Phone" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" /> -->
+                                    
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Email</label>
+                                    <input type="text" formControlName="email" class="form-control" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Email is required</div>
+                                        <div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Secondary Email</label>
+                                    <input type="text" formControlName="email2" class="form-control" placeholder="Optional Email" [ngClass]="{ 'is-invalid': submitted && f.email2.errors }" />
+                                    <div *ngIf="submitted && f.email2.errors" class="invalid-feedback">
+
+                                        <div *ngIf="f.email2.errors.pattern">Email must be a valid email address</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="form-group col-lg-12" [hidden]="IsLogingUpdateReadOnly" >
+                                    <input type="checkbox"  formControlName="IsLogingInfoUpdate" class="form-check-input ml-0 " id="IsLogingInfoUpdate" />
+                                    <label class="form-check-label ml-4" for="IsLogingInfoUpdate">Show Login Info</label> 
+                                </div>
+                               
+                                <div class="col-lg-12" *ngIf="createOrEditform.value.IsLogingInfoUpdate">
+                                    <h2 class="rounded-sm mb-4 p-3 bg-light">
+                                        Login Info
+                                    </h2>
+                                </div>
+                                <div class="form-group col-lg-6" *ngIf="createOrEditform.value.IsLogingInfoUpdate">
+                                    <label>User Name</label>
+                                    <input type="text" formControlName="userName" class="form-control" placeholder="User Name" [ngClass]="{ 'is-invalid': idUserNameIsRequired }"  (keyup)="validateOk();"/>
+                                    <div *ngIf="idUserNameIsRequired" class="invalid-feedback">
+                                        <div *ngIf="idUserNameIsRequired">User Name is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6" *ngIf="createOrEditform.value.IsLogingInfoUpdate">
+                                    <label>Password</label>
+                                    <input type="password" formControlName="password" class="form-control" placeholder="Password" [ngClass]="{ 'is-invalid': idPasswordIsRequired }" (keyup)="validateOk();" />
+                                    <div *ngIf="idPasswordIsRequired" class="invalid-feedback">
+                                        <div *ngIf="idPasswordIsRequired">Password is required</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-12" *ngIf="createOrEditform.value.IsLogingInfoUpdate">
+                                    
+                                    <input type="checkbox" formControlName="IsSendEmail" class="form-check-input ml-0 " id="IsSendEmail"/>
+                                    <label class="form-check-label ml-4" for="IsSendEmail">Send Email Confirmation</label>
+                                </div>
+    
+                            <div class="text-right col-lg-12">
+                                <button class="btn btn-secondary" type="reset" (click)="onReset();close()">{{'Cancel'}}</button>
+                                <button class="btn btn-primary ml-1">{{'Save'}}</button>
+                                
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

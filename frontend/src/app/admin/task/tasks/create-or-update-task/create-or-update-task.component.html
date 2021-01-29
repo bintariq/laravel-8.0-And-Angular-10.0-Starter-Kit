@@ -1,0 +1,134 @@
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-8 col-7">
+            
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/admin/task/task">{{'Tasks' | translate}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{'Add' | translate}}</li>
+                </ol>
+            </nav>
+            </div>
+            
+        </div>
+        
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="col-md-12">
+
+                        <form [formGroup]="createTask" (ngSubmit)="onSubmitTask()">
+                            <div class="row">
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="name">{{'Task Name' | translate}}</label>
+
+                                    <input type="text" placeholder="{{'Task Name' | translate}}"
+                                    class="form-control" id="name" formControlName="name" 
+                                    [ngClass]="{ 'is-invalid': submittedCreateTask && cc.name.errors }"/>
+                                    <div *ngIf="submittedCreateTask && cc.name.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.name.errors.required">{{'Category Name is required' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="category_id">{{'Category' | translate}}</label>
+
+                                    <ng-select
+                                    formControlName="category_id" 
+                                    [items]="taskCategories"
+                                    placeholder="Select Category"
+                                    bindLabel="name"
+                                    required
+                                    bindValue="id" [ngClass]="{ 'is-invalid': submittedCreateTask && cc.category_id.errors }">
+
+                                    <ng-template ng-label-tmp let-item="item">
+                                        <!-- <img height="15" width="15" [src]="item.thumbnailUrl"/> -->
+                                        <span *ngIf="item.parent_id">{{item.activefetch_task_category.name}} >> {{item.name}}</span>
+                                        <span *ngIf="!item.parent_id">{{item.name}}</span>
+                                    </ng-template>
+                                    
+                                    </ng-select>
+
+                                    <!-- <select class="form-control" id="category_id" formControlName="category_id"
+                                    [ngClass]="{ 'is-invalid': submittedCreateTask && cc.category_id.errors }">
+                                        <option [ngValue]="null">Select Category</option>
+                                        <option [value]="c.id" *ngFor="let c of taskCategories">{{c.name}}</option>
+                                    </select> -->
+
+                                    
+
+                                    
+                                    <div *ngIf="submittedCreateTask && cc.category_id.errors" class="invalid-feedback d-block">
+                                        <div *ngIf="cc.category_id.errors.required">{{'Category is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                
+                                <div class="form-group col-lg-6">
+                                    <label for="hours">{{'Estimated Task Time' | translate}}</label>
+                                    <input type="text" placeholder="{{'Estimated Task Completion Time' | translate}}" class="form-control" formControlName="hours" class="form-control" [ngClass]="{ 'is-invalid': submittedCreateTask && cc.hours.errors }" id="hours" />
+                                    
+                                    <div *ngIf="submittedCreateTask && cc.hours.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.hours.errors.required">{{'Estimated Task Time is required' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label for="task_code">{{'Task Code' | translate}}</label>
+                                    <input type="text" class="form-control" placeholder="{{'Task Code' | translate}}" formControlName="task_code" class="form-control" [ngClass]="{ 'is-invalid': submittedCreateTask && cc.task_code.errors }" id="task_code"/>
+                                    
+                                    <div *ngIf="submittedCreateTask && cc.task_code.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.task_code.errors.required">{{'Task Code is required' | translate}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="status">{{'Status' | translate}}</label>
+
+                                    <select class="form-control" formControlName="is_active" id="is_active" [ngClass]="{ 'is-invalid': submittedCreateTask && cc.is_active.errors }">
+                                        <option value="">{{'Select Status' | translate}}</option>
+                                        <option value="1">{{'Active' | translate}}</option>
+                                        <option value="0">{{'Inactive' | translate}}</option>
+                                    </select>
+                                    <span class="svg-icon">
+                                        <svg width="20px" height="20px" viewBox="0 0 16 16"
+                                            class="bi bi-chevron-down" fill="currentColor"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                                        </svg>
+                                    </span>
+                                    <div *ngIf="submittedCreateTask && cc.is_active.errors" class="invalid-feedback">
+                                        <div *ngIf="cc.is_active.errors.required">{{'Status is required' | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="row justify-content-end">
+                                <div class="buttons">
+                                    <button routerLink="/admin/task/task" class="btn btn-secondary">{{'Cancel' | translate}}</button>
+                                    <button type="submit" class="btn btn-primary">{{'Save' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>

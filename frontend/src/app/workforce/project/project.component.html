@@ -1,0 +1,72 @@
+
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+        <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+            
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block" >
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
+                <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/workforce/dashboard"><i class="fas fa-home"></i></a></li>
+
+                <li class="breadcrumb-item active" aria-current="page">{{'Project'}}</li>
+                </ol>
+            </nav>
+            </div>
+            <div class="col-lg-6 col-5 text-right">
+                <a  href="javascript:void(0)" class="btn btn-info" (click)="exportExcel()" >{{'Export CSV'}}</a>
+                 <a *ngIf="isGranted('Create Qoutation')"  href="javascript:void(0)" [routerLink]="['/workforce/project/view-project']"
+                 [queryParams]="{id: 1}" class="btn btn-neutral">{{'Add New'}}</a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Page content -->
+<div class="container-fluid mt--6" >
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-md-6">
+                            <h2 class="mb-0">{{'Available Project'}}</h2>
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- Light table -->
+                <!-- Light table -->
+              
+              <div class="card-body">
+                
+                <div class="row">
+                    <div class="col-md-12 text-center" *ngIf="rows.length == 0"> No Active Project Available!</div>
+                    <div class="col-md-4" *ngFor="let p of rows">
+                        <div class="card mb-0">
+                            
+                            <div class="card-body">
+                              <h5 class="card-title">
+                                <a href="javascript:void(0)" [routerLink]="['/workforce/project/view-project']"
+                                [queryParams]="{id: p.id, isassigned:1}">
+                                    {{p.project_reference_no}}
+                                </a>  
+                                </h5>
+                              <p class="card-text">{{p.project_note}}</p>
+                              <a href="javascript:void(0)" [routerLink]="['/workforce/project/view-project']"
+                              [queryParams]="{id: p.id, isassigned:1}"
+                               class="btn btn-primary">View Project</a>
+                            </div>
+                          </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+

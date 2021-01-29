@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
     { name: "Quotation", value: 150000 },
     { name: "Users", value: 20000 }
   ];
-
+  
   constructor() { }
 
   ngOnInit(): void {

@@ -22,9 +22,11 @@ import { AppComponent } from './app.component';
 import { HttpLoaderFactory, SharedModule } from './SharedModule.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RoleGuard } from './service/role-guard.service';
+import { quotationViewComponent } from './quotationView/quotationView.component';
 @NgModule({
   declarations: [
     AppComponent,
+    quotationViewComponent
   ],
   imports: [
     CountryModule,
@@ -41,6 +43,7 @@ import { RoleGuard } from './service/role-guard.service';
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
+    
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

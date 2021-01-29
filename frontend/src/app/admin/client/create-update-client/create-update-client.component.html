@@ -76,38 +76,40 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="form-control-label" for="emailTo">{{'Secondar Email' | translate}}</label>
+                                    <label class="form-control-label" for="emailTo">{{'Secondary Email' | translate}}</label>
                                     <input type="email" placeholder="{{'Optional Second Email' | translate}}" class="form-control mb-3" id="email2"
                                         formControlName="email2"
                                         [ngClass]="{ 'is-invalid': submittedCreateClient && cu.email2.errors }" />
                                     <div *ngIf="submittedCreateClient" class="invalid-feedback">
-                                        <div *ngIf="cu.email2.errors && cu.email2.errors.required">{{'Email Second is required' | translate}}</div>
-                                        <div *ngIf="cu.email2.errors && cu.email2.errors.email">{{'Email is not valid' | translate}}</div>
+                                        
+                                        <div *ngIf="cu.email2.errors && cu.email2.errors.email">{{'Secondary Email is not valid' | translate}}</div>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label class="form-control-label" for="phone">{{'Phone' | translate}}</label>
-                                    <ngx-intl-tel-input
-                                    *ngIf="dataToEdit == 'edit'"
-                                    [ngClass]="{ 'is-invalid iti--separate-dial-code1': submittedCreateClient && cu.phone.errors }" 
-                                    [cssClass]="'form-control mb-3'" 
-                                    [preferredCountries]="preferredCountries" 
-                                    [enableAutoCountrySelect]="true"
-                                    [value]="'+91 8888888888'"
-                                    [searchCountryFlag]="true"
-                                    name="phone" 
-                                    formControlName="phone"
-                                    [phoneValidation]="false"
-                                    [separateDialCode]="separateDialCode"
-                                    name="phone" 
-                                    formControlName="phone">
-                                </ngx-intl-tel-input>
-                                    <!-- <input type="text" ng2TelInput placeholder="{{'Phone' | translate}}" class="form-control mb-3" id="phone"
-                                        formControlName="phone"
-                                        [ngClass]="{ 'is-invalid': submittedCreateClient && cu.phone.errors }" /> -->
-                                    <div *ngIf="submittedCreateClient" class="invalid-feedback">
-                                        <div *ngIf="cu.phone.errors.required">{{'Phone To is required' | translate}}</div>
+                                    <div class="input-group">
+                                        <div class="col-md-6 p-0">
+                                            <ng-select appearance="outline" [searchable]="true"
+                                                placeholder="Country Code" [clearable]="false" class="cs-select w-100"
+                                                 formControlName="country_code">
+                                                <ng-option value="{{c.callingCodes[0]}}"
+                                                    *ngFor="let c of configService.countriesList">
+                                                    <img class="img-fluid mr-2" src="{{c.flag}}" width="30px" />
+                                                    {{c.name}}
+                                                </ng-option>
+                                            </ng-select>
+                                          
+                                        </div>
+                                        <div class="col-md-6 pr-0">
+                                            <input type="text" formControlName="phone"  class="form-control w-100" id="phone" aria-describedby="phoneHelp" placeholder="XXXX XXX XXXX" mask="0000 000 0000" [ngClass]="{ 'is-invalid': submittedCreateClient && cu.phone.errors }" />
+
+                                            <div *ngIf="submittedCreateClient && cu.phone.errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="cu.phone.errors.required">{{'Phone is required' | translate}}</div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label class="form-control-label" for="is_active">{{'Status' | translate}}</label>
@@ -125,7 +127,7 @@
                                                 d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                                         </svg>
                                     </span>
-                                    <div *ngIf="submittedCreateClient" class="invalid-feedback">
+                                    <div *ngIf="submittedCreateClient && cu.is_active.errors" class="invalid-feedback">
                                         <div *ngIf="cu.is_active.errors.required">{{'Status is required' | translate}}</div>
                                     </div>
                                 </div>

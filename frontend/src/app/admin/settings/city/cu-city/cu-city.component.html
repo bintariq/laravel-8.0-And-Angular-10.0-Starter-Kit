@@ -1,0 +1,192 @@
+<!-- Header -->
+<!-- Header -->
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a routerLink="/admin/dashboard">{{'DashBoard' | translate}}</a></li>
+                            <li class="breadcrumb-item"><a  aria-current="page">{{'Settings' | translate}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page" routerLink="/admin/city">{{'Cities' | translate}}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <!-- <div class="col-lg-6 col-5 text-right">
+                    <a href="javascript:void(0)" routerLink="/admin/create-update-state"
+                    class="btn btn-neutral">{{'New' | translate}}</a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0" *ngIf="addComponent">
+                    <div class="col-md-12">
+                        <form [formGroup]="uploadForm" (ngSubmit)="submitForm()">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+            
+                                        <div class="">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-name">{{'City Name' | translate}}</label>
+                                                        <input formControlName="name" name="name" required="required"
+                                                            pattern=".{6,30}" type="text" placeholder="City Name"
+                                                            class="form-control mb-3" id="input-name"
+                                                            [ngClass]="{'invalid': error &&  error.name}" />
+                                                        <span *ngIf="error && error.name" class="validation-span">{{'Name is required' | translate }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">{{'Country' | translate}}</label>
+                                                        <ng-select
+                                                        (change) = "updateCountryNgModel($event)"                                         
+                                                        [items]="countries" 
+                                                        bindLabel="name"
+                                                        autofocus
+                                                        bindValue="id"
+                                                        [ngModel]="country_id" 
+                                                        [ngModelOptions]="{standalone: true}">
+                                                         </ng-select>
+                                                         <span *ngIf="error && error.country_id" class="validation-span">{{'Country is Required' | translate}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6"  *ngIf="cstates.length > 0">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">{{'State' | translate}}</label>
+                                                        <ng-select
+                                                        (change) = "updateStateNgModel($event)"                                         
+                                                        [items]="cstates" 
+                                                        bindLabel="name"
+                                                        autofocus
+                                                        bindValue="id"
+                                                        [ngModel]="cstate_id" 
+                                                        [ngModelOptions]="{standalone: true}">
+                                                         </ng-select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-status">{{'Status' | translate}}</label>
+                                                        <select formControlName="status" name="status" required="required"
+                                                            class="form-control" id="input-status"
+                                                            [ngClass]="{'invalid': error && error.status}">
+                                                            <option value="" selected="selected"></option>
+                                                            <option value="1">{{'Active' | translate}}</option>
+                                                            <option value="0">{{'Inactive' | translate}}</option>
+                                                        </select>
+                                                        <span *ngIf="error && error.status" class="validation-span">{{'Status is required'}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+   
+                                            </div>
+                                        </div>
+            
+            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" routerLink="/admin/city" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
+                                <button type="submit" class="btn btn-primary">{{'Save Changes' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-header border-0" *ngIf="editComponent">
+                    <div class="col-md-12">
+                        <form [formGroup]="editForm" (ngSubmit)="submitEditForm()">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+            
+                                        <div class="">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-name">{{'City Name' | translate}}</label>
+                                                        <input formControlName="name" name="name" required="required"
+                                                            pattern=".{6,30}" type="text" placeholder="City Name"
+                                                            class="form-control mb-3" id="input-name"
+                                                            [ngClass]="{'invalid': error &&  error.name}" />
+                                                            <span *ngIf="error && error.name" class="validation-span">{{'Name is required' | translate }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">{{'Country' | translate}}</label>
+                                                        <ng-select     
+                                                        (change) = "updateCountryNgModel($event)"                                    
+                                                        [items]="countries" 
+                                                        bindLabel="name"
+                                                        autofocus
+                                                        bindValue="id"
+                                                        [ngModel]="country_id" 
+                                                        [ngModelOptions]="{standalone: true}">
+                                                         </ng-select>
+                                                         <span *ngIf="error && error.country_id" class="validation-span">{{'Country is Required' | translate}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6"  *ngIf="cstates.length > 0">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-country">{{'State' | translate}}</label>
+                                                        <ng-select
+                                                        (change) = "updateStateNgModel($event)"                                         
+                                                        [items]="cstates" 
+                                                        bindLabel="name"
+                                                        autofocus
+                                                        bindValue="id"
+                                                        [ngModel]="cstate_id" 
+                                                        [ngModelOptions]="{standalone: true}">
+                                                         </ng-select>
+                                                         <span *ngIf="(error$ | async)?.state_id" class="validation-span">{{ (error$ |
+                                                            async)?.state_id }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label" for="input-status">{{'Status' | translate}}</label>
+                                                        <select formControlName="status" name="status" required="required"
+                                                            class="form-control" id="input-status"
+                                                            [ngClass]="{'invalid': (error$ | async)?.status}">
+                                                            <option value="" ></option>
+                                                            <option value="1">{{'ON' | translate}}</option>
+                                                            <option value="0">{{'OFF' | translate}}</option>
+                                                        </select>
+                                                        <span *ngIf="error && error.status" class="validation-span">{{'Status is required'}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+            
+            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" routerLink="/admin/city" class="btn btn-secondary" data-dismiss="modal">{{'Close' | translate}}</button>
+                                <button type="submit" class="btn btn-primary">{{'Save Changes' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

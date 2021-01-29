@@ -67,21 +67,6 @@ function initialize(Coords,zone_info) {
 
 		geocoder.geocode({'address':searchText}, function(results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
-				var coords_json = [];
-				fetch('https://nominatim.openstreetmap.org/search.php?q=' + searchText + '&polygon_geojson=1&format=json')
-				// Handle success
-				.then(response => response.json())  // convert to json
-				.then(json => {
-					console.log(json)
-					coords_json = json;
-				})    
-				.catch(err => {var coords_json = '';console.log('Request Failed', err)});
-				if(coords_json.geojson.type == 'Point'){
-					console.log('Point')
-				}
-				if(coords_json.geojson.type == 'Polygon'){
-					console.log('Polygon')
-				}
 				if(Coords == null){
 					var triangle1 = google.maps.geometry.spherical.computeOffset(results[0].geometry.location, 15050, 0);
 					var triangle2 = google.maps.geometry.spherical.computeOffset(results[0].geometry.location, 15050, 120);
