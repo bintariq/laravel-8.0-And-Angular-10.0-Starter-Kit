@@ -8,15 +8,15 @@
                   <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                       <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
                           <li class="breadcrumb-item"><a routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
-                          
-                          <li class="breadcrumb-item active" aria-current="page">{{'Clients' | translate}}</li>
+
+                          <li class="breadcrumb-item active" aria-current="page">{{'Vendor' | translate}}</li>
                       </ol>
                   </nav>
               </div>
               <div class="col-lg-6 col-5 text-right">
                 <a href="javascript:void(0)" (click)="excelDownload();"
                 class="btn btn-info">{{'Export CSV' | translate}}</a>
-                  <a  *ngIf="isGranted('Create Clients')" href="javascript:void(0)" routerLink="/admin/create-update-client"
+                  <a  *ngIf="isGranted('Create Vendor')" href="javascript:void(0)" routerLink="/admin/create-update-client"
                       class="btn btn-neutral">{{'Add New' | translate}}</a>
               </div>
           </div>
@@ -35,7 +35,7 @@
               <div class="card-header border-0">
                   <div class="row align-items-center justify-content-between">
                       <div class="col-md-6">
-                          <h2 class="mb-0">{{'Clients' | translate}}</h2>
+                          <h2 class="mb-0">{{'Vendor' | translate}}</h2>
                       </div>
                       <div class="col-md-6 d-flex justify-content-end">
                         <div class="form-group mr-2 mb-0">
@@ -57,12 +57,12 @@
                             <input type="text" class="form-control rounded-lg"
                             placeholder="Search" (keyup)="searchRecord($event)" />
                             </div>
-                        
+
                     </div>
                   </div>
               </div>
               <!-- Light table -->
-              
+
             <div class="card-body">
                <div class="col-12 px-0 mb-3">
                 <ng-select [items]="allColumns" [multiple]="true" bindLabel="name"  [selectableGroup]="true"
@@ -93,7 +93,7 @@
                     {{ value }}
                   </ng-template>
                 </ngx-datatable-column>
-                
+
                   <ngx-datatable-column *ngFor="let col of columns" [width]="250" [name]="col.name" [prop]="col.prop"> </ngx-datatable-column>
 
                   <ngx-datatable-column name="Status" prop="is_active" [width]="100">
@@ -107,15 +107,15 @@
                             <span class="status">{{'Inactive' | translate}}</span>
                         </span>
                     </ng-template>
-                </ngx-datatable-column> 
-               
+                </ngx-datatable-column>
+
                   <ngx-datatable-column name="Actions" [width]="150">
                       <ng-template let-value="value"  let-row="row" ngx-datatable-cell-template>
                           <button class="btn text-white btn-icon-only bg-primary" *ngIf="isGranted('Update Clients')" routerLink="/admin/create-update-client/{{row.id}}"><i class="fas fa-pencil-alt"></i> </button>
                           <button class="btn text-white btn-icon-only bg-danger" *ngIf="isGranted('Delete Clients')" (click)="delete(row.id)"><i class="far fa-trash-alt"></i></button>
-                                  
+
                       </ng-template>
-                      
+
                     </ngx-datatable-column>
                 </ngx-datatable>
               </div>

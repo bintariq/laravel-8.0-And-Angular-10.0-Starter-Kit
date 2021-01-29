@@ -4,15 +4,15 @@
       <div class="sidenav-header p-4 d-flex align-items-center">
         <!-- <a class="navbar-brand p-0" href="javascript:void(0)">
           <img src="../assets/img/h-logo.png" class="navbar-brand-img mr-3">
-          
+
         </a> -->
         <a class="navbar-brand p-0" href="javascript:void(0)">
           <img src="../assets/img/cbre-logo.png" class="navbar-brand-img mr-3" style="max-height: 15rem;">
-          
+
         </a>
         <!-- <img src="" class="navbar-brand-img" alt="Client"> -->
 
-        
+
       </div>
       <div class="navbar-inner">
         <!-- Collapse -->
@@ -28,110 +28,14 @@
             <li class="nav-item" *ngIf="isGranted('View Clients')">
               <a  routerLink="/admin/view-clients"  class="nav-link">
                 <i class="fas fa-users text-primary"></i>
-                <span class="nav-link-text">{{'Clients' | translate}}</span>
+                <span class="nav-link-text">{{'Vendor' | translate}}</span>
               </a>
             </li>
-            <li class="nav-item" *ngIf="isGranted('View Qoutation')">
-              <a  routerLink="/admin/qoutation"  class="nav-link">
-                <i class="fas fa-file-signature text-primary"></i>
-                <span class="nav-link-text">{{'Quotation' | translate}}</span>
+            <li  class="nav-item" *ngIf="isGranted('View Task') || isGranted('View Task Category')">
+              <a *ngIf="isGranted('View Task Category')" routerLink="/admin/task/task-category"  class="nav-link">
+                <i class="fas fa-stream text-primary"></i>
+                <span>{{'Categories' | translate}}</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a  routerLink="/admin/project"  class="nav-link">
-                <i class="fas fa-project-diagram text-primary"></i>
-                <span class="nav-link-text">Project</span>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a  routerLink="/admin/project-manager"  class="nav-link">
-                <i class="fas fa-user-cog text-primary"></i>
-                <span class="nav-link-text">Project Managers</span>
-              </a>
-            </li>
-
-            <li *ngIf="isGranted('View Task') || isGranted('View Task Category')" class="nav-item dropdown bg-light rounded mx-2">
-              <a class="nav-link" data-toggle="collapse" href="#multiCollapseExample12" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
-                <i class="fas fa-stream text-primary ml-n2"></i>
-                <span class="nav-link-text text-dark">{{'Task' | translate}}  </span>
-              </a>
-              <div class="collapse" id="multiCollapseExample12">
-                <a *ngIf="isGranted('View Task Category')" routerLink="/admin/task/task-category"  class="dropdown-item">
-                  <span>{{'Task Category' | translate}}</span>
-                </a>
-                <a *ngIf="isGranted('View Task')" routerLink="/admin/task/task" class="dropdown-item">
-                  <span>{{'Task' | translate}}</span>
-                </a>
-               
-                
-              </div>
-            </li>
-            <li *ngIf="isGranted('View Work Force') || isGranted('View Agency') || isGranted('View Work Force Category') || isGranted('View Discipline')" class="nav-item dropdown bg-light rounded mx-2">
-              <a class="nav-link" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
-                <i class="fas fa-boxes text-primary ml-n2"></i>
-                <span class="nav-link-text text-dark">{{'Work Force' | translate}}  </span>
-              </a>
-           
-              <div class="collapse" id="multiCollapseExample1">
-                <a *ngIf="isGranted('View Discipline')" routerLink="/admin/workfore/discipline" class="dropdown-item">
-                  <span>{{'Discipline' | translate}}</span>
-                </a>
-                <a routerLink="/admin/workfore/rate-card" class="dropdown-item">
-                  <span>{{'Rate Card' | translate}}</span>
-                </a>
-                <a  *ngIf="isGranted('View Agency')" routerLink="/admin/workfore/agency"  class="dropdown-item">
-                  <span>{{'Agency' | translate}}</span>
-                </a>
-                <a *ngIf="isGranted('View Work Force')" routerLink="/admin/workfore/workfore"  class="dropdown-item">
-                  <span>{{'Work Force' | translate}}</span>
-                </a>
-                
-                <!-- <a *ngIf="isGranted('View Work Force Category')" routerLink="/admin/workfore/category" class="dropdown-item">
-                  <span>{{'Category' | translate}}</span>
-                </a> -->
-                
-                
-                <!-- <a routerLink="/admin/workfore/ratecard" class="dropdown-item">
-                  <span>{{'RateCard' | translate}}</span>
-                </a> -->
-              </div>
-            </li>
-            <li *ngIf=" isGranted('View Material') ||
-                    isGranted('View Material Category') ||
-                    isGranted('View Material Distributor') ||
-                    isGranted('View Unit') ||
-                    isGranted('View Material Manufacturer')" 
-             class="nav-item dropdown bg-light rounded mx-2">
-              <a class="nav-link" data-toggle="collapse" href="#multiCollapseExample2" role="button" aria-expanded="false" aria-controls="multiCollapseExample12">
-                <i class="fas fa-broom text-primary ml-n2"></i>
-                <span class="nav-link-text text-dark">{{'Material' | translate}}  </span>
-              </a>
-              <div class="collapse" id="multiCollapseExample2">
-                <a *ngIf="isGranted('View Material Category')" href="javascript:void(0)" routerLink="/admin/material/material-category" class="dropdown-item">
-                  <span>{{'Category' | translate}}</span>
-                </a>
-                <a *ngIf="isGranted('View Material Manufacturer')" href="javascript:void(0)" routerLink="/admin/material/manufacture" class="dropdown-item">
-                  <span>{{'Manufacturer' | translate}}</span>
-                </a>
-                
-                <a href="javascript:void(0)" routerLink="/admin/material/CommonDistrib" class="dropdown-item">
-                  <span>{{'Common Distributor' | translate}}</span>
-                </a>
-                <a *ngIf="isGranted('View Material Distributor')" href="javascript:void(0)" routerLink="/admin/material/material-distributor" class="dropdown-item">
-
-                  <span>{{'Distributor' | translate}}</span>
-                </a>
-                <a *ngIf="isGranted('View Unit')" href="javascript:void(0)" routerLink="/admin/unit" class="dropdown-item">
-                  <span>{{'Units' | translate}}</span>
-                </a>
-                <a *ngIf="isGranted('View Material')" href="javascript:void(0)" routerLink="/admin/material/material" class="dropdown-item">
-                  <span>{{'Material' | translate}}</span>
-                </a>
-                
-                
-                
-              </div>
             </li>
             <li class="nav-item dropdown bg-light rounded mx-2"
             *ngIf="isGranted('View Currencies') ||
@@ -173,10 +77,10 @@
             <li *ngIf="isGranted('View Users') || isGranted('View Roles')" class="nav-item dropdown bg-light rounded mx-2">
               <a class="nav-link" data-toggle="collapse" href="#multiCollapseExample4" role="button" aria-expanded="false" aria-controls="multiCollapseExample12">
                 <i class="fas fa-user-lock text-primary ml-n2"></i>
-               
+
                 <span class="nav-link-text text-dark">{{'Administrator' | translate}}  </span>
               </a>
-              <div class="collapse" id="multiCollapseExample4"> 
+              <div class="collapse" id="multiCollapseExample4">
                 <a *ngIf="isGranted('View Users')" class="nav-link font-size-sm" href="javascript:void(0)" routerLink="/admin/view-users" class="dropdown-item">
                   <span>{{'Users' | translate}}</span>
                 </a>
@@ -190,4 +94,4 @@
       </div>
     </div>
   </nav>
- 
+

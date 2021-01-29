@@ -23,15 +23,15 @@ export class ViewClientComponent extends AppComponentBase {
 
   }
   allColumns = [
-    { prop: 'client_name', name: 'End Client' },
-    { prop: 'contact_person_name', name: 'Contacted Person' },
-    { prop: 'company_name', name: 'CBRE Client'},
+    { prop: 'client_name', name: 'First Name' },
+    { prop: 'contact_person_name', name: 'Last Name' },
+    { prop: 'company_name', name: 'Company Name'},
     { prop: 'email', name: 'Email' }
   ];
   columns = [
-    { prop: 'client_name', name: 'End Client' },
-    { prop: 'contact_person_name', name: 'Contacted Person' },
-    { prop: 'company_name', name: 'CBRE Client'},
+    { prop: 'client_name', name: 'First Name' },
+    { prop: 'contact_person_name', name: 'Last Name' },
+    { prop: 'company_name', name: 'Company Name'},
     { prop: 'email', name: 'Email' }
   ];
   ngOnInit(): void {

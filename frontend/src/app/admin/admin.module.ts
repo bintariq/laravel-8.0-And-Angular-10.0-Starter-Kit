@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApplicationPipesModule } from '../customPipes/customPipe.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { GooglePlaceModule } from "ngx-google-places-autocomplete"; 
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 import { ProfileComponent } from './profile/profile.component';
 import { CountryComponent } from './settings/country/country.component';
@@ -38,48 +38,12 @@ import { DashboaradminComponent } from './admin.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ExcelService } from '../service/excel.service';
-import { CategoryComponent } from './Workforce/category/category.component';
-import { AgencyComponent } from './Workforce/agency/agency.component';
-import { WorkforeComponent } from './Workforce/workfore/workfore.component';
-
-import { CreateOrEditWorkforeceModalComponent } from './Workforce/workfore/create-or-edit-workforece-modal/create-or-edit-workforece-modal.component';
-import { CreateOrEditAgencyComponent } from './Workforce/agency/create-or-edit-agency/create-or-edit-agency.component';
-import { CreateOrEditCategoryComponent } from './Workforce/category/create-or-edit-category/create-or-edit-category.component';
-
-import { MaterialComponent } from './material/material/material.component';
-import { CreateOrUpdateMaterialComponent } from './material/material/create-or-update-material/create-or-update-material.component';
-import { MaterialCategoryComponent } from './material/material-category/material-category.component';
-import { CreateOrUpdateMaterialCategoryComponent } from './material/material-category/create-or-update-material-category/create-or-update-material-category.component';
-import { MaterialVendorComponent } from './material/material-vendor/material-vendor.component';
-import { CreateOrUpdateMaterialVendorComponent } from './material/material-vendor/create-or-update-material-vendor/create-or-update-material-vendor.component';
-import { UnitComponent } from './unit/unit.component';
-import { CreateOrUpdateUnitComponent } from './unit/create-or-update-unit/create-or-update-unit.component';
-
-import { RateCardComponent } from './Workforce/rate-card/rate-card.component';
-import { CreateOrEditRateCardComponent } from './Workforce/rate-card/create-or-edit-rate-card/create-or-edit-rate-card.component';
-
-
-import { QoutationComponent } from './qoutation/qoutation.component';
-import { CreateOrEditQoutationComponent } from './Qoutation/create-or-edit-qoutation/create-or-edit-qoutation.component';
-import { AddTaskDetailInQoutationComponent } from './Qoutation/AddTaskDetailInQoutation/AddTaskDetailInQoutation.component';
-
 import { TasksComponent } from './task/tasks/tasks.component';
 import { CreateOrUpdateTaskComponent } from './task/tasks/create-or-update-task/create-or-update-task.component';
 import { CreateOrUpdateTaskCategoryComponent } from './task/task-category/create-or-update-task-category/create-or-update-task-category.component';
 import { TaskCategoryComponent } from './task/task-category/task-category.component';
-import { DisciplineComponent } from './Workforce/discipline/discipline.component';
-import { CreateOrUpdateDisciplineComponent } from './Workforce/discipline/create-or-update-discipline/create-or-update-discipline.component';
-import { ManufactureComponent } from './material/manufacture/manufacture.component';
-import { CreateOrEditManufacturerComponent } from './material/manufacture/create-or-edit-manufacturer/create-or-edit-manufacturer.component';
-import { CommonDistribComponent } from './material/common-distrib/common-distrib.component';
 import { BsDatepickerModule, BsDatepickerConfig, BsDaterangepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { CreateOrUpdateCommonDistribComponent } from './material/common-distrib/create-or-update-common-distrib/create-or-update-common-distrib.component';
-import { ViewQuotationComponent } from './qoutation/view-quotation/view-quotation.component';
-import { ProjectComponent } from './project/project.component';
-import { ViewProjectComponent } from './project/view-project/view-project.component';
 import { FocusInvalidInputDirective } from '../shared/Directive/focus-invalid-input.directive';
-import { ProjectManagerComponent } from './project-manager/project-manager.component';
-import { CreateOrEditProjectManagerComponent } from './project-manager/create-or-edit-project-manager/create-or-edit-project-manager.component';
 
 @NgModule({
   declarations: [
@@ -112,39 +76,10 @@ import { CreateOrEditProjectManagerComponent } from './project-manager/create-or
     CreateUpdateLanguageComponent,
     ViewLocationComponent,
     CreateUpdateLocationComponent,
-    CategoryComponent,
-    AgencyComponent,
-    WorkforeComponent, 
-    CreateOrEditWorkforeceModalComponent, 
-    CreateOrEditAgencyComponent, 
-    CreateOrEditCategoryComponent, 
-    MaterialComponent, 
-    CreateOrUpdateMaterialComponent, 
-    MaterialCategoryComponent, 
-    CreateOrUpdateMaterialCategoryComponent, 
-    MaterialVendorComponent, 
-    CreateOrUpdateMaterialVendorComponent, 
-    UnitComponent, 
-    CreateOrUpdateUnitComponent, 
-    CreateOrUpdateMaterialVendorComponent ,
-    RateCardComponent, 
-    CreateOrEditRateCardComponent, 
-    TasksComponent, 
+    TasksComponent,
     CreateOrUpdateTaskComponent,
-    TaskCategoryComponent, 
-    CreateOrUpdateTaskCategoryComponent,
-    QoutationComponent, 
-    CreateOrEditQoutationComponent,
-    AddTaskDetailInQoutationComponent, 
-    DisciplineComponent, 
-    CreateOrUpdateDisciplineComponent, 
-    ManufactureComponent, 
-    CreateOrEditManufacturerComponent, 
-    CommonDistribComponent, 
-    CreateOrUpdateCommonDistribComponent, 
-    ViewQuotationComponent, 
-    ProjectComponent, 
-    ViewProjectComponent, ProjectManagerComponent, CreateOrEditProjectManagerComponent
+    TaskCategoryComponent,
+    CreateOrUpdateTaskCategoryComponent
   ],
   imports: [
     CommonModule,
@@ -155,11 +90,11 @@ import { CreateOrEditProjectManagerComponent } from './project-manager/create-or
     AdminRoutingModule,
     SharedModule,
     ApplicationPipesModule,
-    
+
   ],
- 
+
   providers: [ExcelService,AuthenticationService,
-   
+
   ],
   bootstrap: [DashboaradminComponent]
 })

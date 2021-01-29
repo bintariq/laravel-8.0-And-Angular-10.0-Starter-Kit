@@ -35,37 +35,36 @@
                         <form [formGroup]="createClient" (ngSubmit)="onSubmitClient()">
                             <div class="row">
                                 <div class="form-group col-lg-6">
-                                    <label class="form-control-label" for="client_name">{{'End Client' | translate}}</label>
-                                    <input type="text" placeholder="{{'End Client' | translate}}" class="form-control mb-3" id="client_name"
+                                    <label class="form-control-label" for="client_name">{{'First Name' | translate}}</label>
+                                    <input type="text" placeholder="{{'First Name' | translate}}" class="form-control mb-3" id="client_name"
                                         formControlName="client_name"
                                         [ngClass]="{ 'is-invalid': submittedCreateClient && cu.client_name.errors }" />
 
                                     <div *ngIf="submittedCreateClient" class="invalid-feedback">
-                                        <div *ngIf="cu.client_name.errors && cu.client_name.errors.required">{{'End Client is required' | translate}}</div>
+                                        <div *ngIf="cu.client_name.errors && cu.client_name.errors.required">{{'First Name is required' | translate}}</div>
                                     </div>
                                 </div>
                                 <div class="form-group col-lg-6">
-                                    <label class="form-control-label" for="company_name">{{'CBRE Client' | translate}}</label>
-                                    <input type="text" placeholder="{{'CBRE Client' | translate}}" class="form-control mb-3"
+                                  <label class="form-control-label" for="contact_person_name">{{'Last Name' | translate}}</label>
+                                  <input type="text" placeholder="{{'Contacted Person Name' | translate}}" class="form-control mb-3" id="contact_person_name"
+                                      formControlName="contact_person_name"
+                                      [ngClass]="{ 'is-invalid': submittedCreateClient && cu.contact_person_name.errors }" />
+
+                                  <div *ngIf="submittedCreateClient" class="invalid-feedback">
+                                      <div *ngIf="cu.contact_person_name.errors && cu.contact_person_name.errors.required">{{'Last Name is required' | translate}}</div>
+                                  </div>
+                              </div>
+                                <div class="form-group col-lg-6">
+                                    <label class="form-control-label" for="company_name">{{'Company Name' | translate}}</label>
+                                    <input type="text" placeholder="{{'Company Name' | translate}}" class="form-control mb-3"
                                         id="company_name" formControlName="company_name"
                                         [ngClass]="{ 'is-invalid': submittedCreateClient && cu.company_name.errors }" />
                                     <div *ngIf="submittedCreateClient"
                                         class="invalid-feedback">
-                                        <div *ngIf="cu.company_name.errors && cu.company_name.errors.required">{{'CBRE Client is required' | translate}}</div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label class="form-control-label" for="contact_person_name">{{'Contacted Person Name' | translate}}</label>
-                                    <input type="text" placeholder="{{'Contacted Person Name' | translate}}" class="form-control mb-3" id="contact_person_name"
-                                        formControlName="contact_person_name"
-                                        [ngClass]="{ 'is-invalid': submittedCreateClient && cu.contact_person_name.errors }" />
+                                        <div *ngIf="cu.company_name.errors && cu.company_name.errors.required">{{'Company Name is required' | translate}}</div>
 
-                                    <div *ngIf="submittedCreateClient" class="invalid-feedback">
-                                        <div *ngIf="cu.contact_person_name.errors && cu.contact_person_name.errors.required">{{'Contacted Person Name is required' | translate}}</div>
                                     </div>
                                 </div>
-                               
                                 <div class="form-group col-lg-6">
                                     <label class="form-control-label" for="email">{{'Email' | translate}}</label>
                                     <input type="email" placeholder="{{'Email' | translate}}" class="form-control mb-3" id="email"
@@ -81,7 +80,7 @@
                                         formControlName="email2"
                                         [ngClass]="{ 'is-invalid': submittedCreateClient && cu.email2.errors }" />
                                     <div *ngIf="submittedCreateClient" class="invalid-feedback">
-                                        
+
                                         <div *ngIf="cu.email2.errors && cu.email2.errors.email">{{'Secondary Email is not valid' | translate}}</div>
                                     </div>
                                 </div>
@@ -98,7 +97,7 @@
                                                     {{c.name}}
                                                 </ng-option>
                                             </ng-select>
-                                          
+
                                         </div>
                                         <div class="col-md-6 pr-0">
                                             <input type="text" formControlName="phone"  class="form-control w-100" id="phone" aria-describedby="phoneHelp" placeholder="XXXX XXX XXXX" mask="0000 000 0000" [ngClass]="{ 'is-invalid': submittedCreateClient && cu.phone.errors }" />
@@ -137,7 +136,7 @@
                                     <a routerLink="/admin/view-clients"
                                         class="btn btn-secondary">{{'Cancel' | translate}}</a>
                                     <button type="submit" class="btn btn-primary">{{'Save' | translate}}</button>
-                                    
+
                                 </div>
                             </div>
                         </form>

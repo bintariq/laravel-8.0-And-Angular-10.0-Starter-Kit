@@ -253,7 +253,7 @@ class UserApiController extends Controller
                    ->subject('Mail from Wise Store Apps');
                  });
                  if($code){
-                   $user_token=
+                   $user_token=[
                      'ForgetToken' => $code,
                      'success' => 1,
                      'message' => 'User Forget Password Token',

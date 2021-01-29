@@ -8,8 +8,8 @@
                     <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
                         <ol class="breadcrumb breadcrumb-links breadcrumb-dark" style="margin-bottom: 0;">
                             <li class="breadcrumb-item"><a routerLink="/admin/dashboard"><i class="fas fa-home"></i></a></li>
-                            
-                            <li class="breadcrumb-item active" aria-current="page">{{'Task Category' | translate}}</li>
+
+                            <li class="breadcrumb-item active" aria-current="page">{{'Categories' | translate}}</li>
                         </ol>
                     </nav>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center justify-content-between">
                         <div class="col-md-6">
-                            <h2 class="mb-0">{{'Task Categories' | translate}}</h2>
+                            <h2 class="mb-0">{{'Categories' | translate}}</h2>
                         </div>
                         <div class="col-md-6 d-flex justify-content-end">
                             <div class="form-group mr-2 mb-0">
@@ -57,12 +57,12 @@
                                 <input type="text" class="form-control rounded-lg"
                                 placeholder="Search" (keyup)="searchRecord($event)" />
                                 </div>
-                            
+
                         </div>
                     </div>
                 </div>
                 <!-- Light table -->
-          
+
                   <div class="card-body">
                     <div class="col-12 px-0 mb-3">
                         <ng-select [items]="allColumns" [multiple]="true" bindLabel="name"  [selectableGroup]="true"
@@ -110,13 +110,13 @@
                         <ng-template let-value="value"  let-row="row" ngx-datatable-cell-template>
                             <button *ngIf="isGranted('Update Task Category')" class="btn text-white btn-icon-only bg-primary" routerLink="/admin/task/create-update-task-category/{{row.id}}"><i class="fas fa-pencil-alt"></i> </button>
                             <button *ngIf="isGranted('Delete Task Category')" class="btn text-white btn-icon-only bg-danger" (click)="delete(row.id)"><i class="far fa-trash-alt"></i></button>
-                            
+
                         </ng-template>
-                        
+
                       </ngx-datatable-column>
                     </ngx-datatable>
                   </div>
-                
+
             </div>
         </div>
     </div>

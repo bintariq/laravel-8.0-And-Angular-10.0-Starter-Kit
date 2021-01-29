@@ -36,7 +36,7 @@ var currentUser = JSON.parse(localStorage.getItem('user'));
 })
 export class ConfigService extends AppComponentBase {
 
-  public yourSiteUrl: string = 'https://api.gemini.technology';
+  public yourSiteUrl: string = 'http://127.0.0.1:8000';
   public token: string;
   public pageSize: number=25;
 
