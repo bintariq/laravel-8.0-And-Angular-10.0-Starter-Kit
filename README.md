@@ -3,7 +3,7 @@
 </div>
 
 # Laravel + Angular + Ngrx (State Management) + i18n Admin Template
-Quick start With Admin Template for Laravel 8.0 + Angular 10.0 With NGRX projects with JWT auth.
+Quick start With Admin Template for Laravel 8.0 + Angular 10.0 With And With Out NGRX projects with JWT auth.
 
 ## Includes:
 
